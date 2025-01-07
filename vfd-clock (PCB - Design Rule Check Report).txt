@@ -1,0 +1,121 @@
+Design Rule Check Report
+------------------------
+
+Report Written:     15:13 Sunday, December 15, 2024
+Project Path:       D:\Elektronika\PCB\vfd-clock\vfd-clock.prj
+Design Path:        D:\Elektronika\PCB\vfd-clock\vfd-clock.pcb
+Design Title:       
+Created:            08.10.2024 21:04:11
+Last Saved:         15.12.2024 15:13:12
+Editing Time:       414 min
+Units:              thou (precision 0)
+
+
+Results
+=======
+
+Track to Pad error (T-P) between (9705 13305) and (9705 13319) on layer "Top Copper".
+    Error between Component Pad D1.4 and Track (Net 'E'), Gap is 9 needs to be 10.
+
+Track to Pad error (T-P) between (11055 13305) and (11055 13319) on layer "Top Copper".
+    Error between Component Pad D3.4 and Track (Net 'E'), Gap is 9 needs to be 10.
+
+Track to Pad error (T-P) between (10380 13305) and (10380 13319) on layer "Top Copper".
+    Error between Component Pad D4.4 and Track (Net 'E'), Gap is 9 needs to be 10.
+
+Track to Pad error (T-P) between (9030 13305) and (9030 13319) on layer "Top Copper".
+    Error between Component Pad D5.4 and Track (Net 'E'), Gap is 9 needs to be 10.
+
+Track to Pad error (T-P) between (8340 13305) and (8340 13319) on layer "Top Copper".
+    Error between Component Pad D6.4 and Track (Net 'E'), Gap is 9 needs to be 10.
+
+Track to Pad error (T-P) between (7680 13305) and (7680 13319) on layer "Top Copper".
+    Error between Component Pad D7.4 and Track (Net 'E'), Gap is 9 needs to be 10.
+
+Dangling Track from (7830,13009) to (7828,13011) on layer Bottom Copper
+
+Dangling Track from (8505,13009) to (8503,13011) on layer Bottom Copper
+
+Dangling Track from (9180,13009) to (9178,13011) on layer Bottom Copper
+
+Dangling Track from (9855,13009) to (9853,13011) on layer Bottom Copper
+
+Dangling Track from (10530,13009) to (10528,13011) on layer Bottom Copper
+
+Dangling Track from (11205,13009) to (11203,13011) on layer Bottom Copper
+
+Dangling Track from (11880,13009) to (11878,13011) on layer Bottom Copper
+
+Dangling Track from (8503,13011) to (8505,13011) on layer Bottom Copper
+
+Dangling Track from (7525,13425) to (7530,13425) on layer Top Copper
+
+Dangling Track from (10372,15360) to (10365,15367) on layer Bottom Copper
+
+Dangling Track from (6165,14465) to (6160,14460) on layer Bottom Copper
+
+Dangling Track from (6770,14220) to (6775,14225) on layer Bottom Copper
+
+Dangling Track from (6010,14285) to (6015,14290) on layer Bottom Copper
+
+Dangling Track from (11123,14880) to (11145,14902) on layer Bottom Copper
+
+Dangling Track from (11228,14850) to (11232,14847) on layer Bottom Copper
+
+Dangling Track from (6470,13171) to (6465,13171) on layer Bottom Copper
+
+Dangling Track from (10500,15255) to (10527,15255) on layer Bottom Copper
+
+
+Number of errors found : 23
+
+
+Settings
+========
+
+
+Spacings
+
+=========
+
+Tracks        Yes
+Pads and Vias Yes
+Shapes        No
+Text          No
+Board         No
+Drills        No
+Components    No
+
+
+Manufacturing
+
+==============
+
+Drill Breakout                  No
+Drill Backoff                   No
+Silkscreen Overlap              No
+Copper Text In Board            No
+Min Track Width                 No
+Min Annular Ring                No
+Min Paste Size                  No
+Vias In Pads                    No
+Unplated Vias                   No
+Unplated Pads With Inner Tracks No
+
+
+Nets
+
+=====
+
+Net Completion               Yes
+Dangling Tracks              Yes
+Net Track Length Differences No
+Nets without Components      No
+Nets on No Connect pins      No
+Single Pin Net               No
+Max Vias on Net              No
+Pcb-only Nets                No
+
+
+
+End Of Report.

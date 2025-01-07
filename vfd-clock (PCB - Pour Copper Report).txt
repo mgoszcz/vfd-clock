@@ -1,0 +1,14 @@
+Pour Copper Report
+------------------
+
+Report Written:     21:45 Wednesday, December 18, 2024
+Project Path:       D:\Elektronika\PCB\vfd-clock\vfd-clock.prj
+Design Path:        D:\Elektronika\PCB\vfd-clock\vfd-clock.pcb
+Design Title:       
+Created:            08.10.2024 21:04:11
+Last Saved:         15.12.2024 15:18:31
+Editing Time:       422 min
+Units:              thou (precision 0)
+
+
+End Of Report.

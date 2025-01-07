@@ -1,0 +1,18 @@
+Schematic and PCB Check Report
+------------------------------
+
+Report Written:     22:25 Thursday, November 28, 2024
+Project Path:       D:\Elektronika\PCB\vfd-clock\vfd-clock.prj
+Design Path:        D:\Elektronika\PCB\vfd-clock\vfd-clock.pcb
+Design Title:       
+Created:            08.10.2024 21:04:11
+Last Saved:         28.11.2024 13:32:37
+Editing Time:       369 min
+Units:              thou (precision 0)
+
+
+Checking integrity of Schematic "D:\Elektronika\PCB\vfd-clock\vfd-clock.sch" with PCB "D:\Elektronika\PCB\vfd-clock\vfd-clock.pcb"
+==================================================================================================================================
+
+
+End Of Report.

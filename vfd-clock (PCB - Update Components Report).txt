@@ -1,0 +1,283 @@
+Update Components Report
+------------------------
+
+Report Written:     Tuesday, October 22, 2024
+Project Path:       D:\Elektronika\PCB\vfd-clock\vfd-clock.prj
+Design Path:        D:\Elektronika\PCB\vfd-clock\vfd-clock.pcb
+Design Title:       
+Created:            08.10.2024 22:04:11
+Last Saved:         22.10.2024 22:18:13
+Editing Time:       68 min
+Units:              thou (precision 0)
+
+
+Library Files:
+==============
+
+D:\Elektronika\PCB_Library\MyDownloaded.cml
+C:\Users\marci\Documents\DesignSpark PCB 11.0\Library\DownloadedLibrary\SnapEDA Downloads.cml
+C:\Users\marci\Documents\DesignSpark PCB 11.0\Library\User\User.cml
+C:\Users\marci\Documents\DesignSpark PCB 11.0\Library\Default\DesignSpark.cml
+C:\Users\marci\Documents\DesignSpark PCB 11.0\Library\Default\ltspice.cml
+C:\Users\marci\Documents\DesignSpark PCB 11.0\Library\Default\XSpice.cml
+
+Selected items to be updated:
+=============================
+
+
+Components:
+===========
+
+ATMEGA16A-AU (QFP80P1200X1200X120-44N)
+Battery (DSC)
+BC547A (TO92260P520H877-3)
+BC557B (TO92127P460H470-3)
+Capacitor (0805)
+CONN_SIL_2 (DSC)
+DS3231M+ (SOIC127P1032X265-16N)
+IV-6 (MISC)
+KANDA (DIL)
+LED_RGB (SM)
+LED_RGB (TH)
+LM78M05CDT/NOPB (TO228P991X255-3N)
+NE555D (SOIC127P600X175-8N)
+Resistor (DSC)
+
+Symbols:
+========
+
+2                        D:\Elektronika\PCB_Library\MyDownloaded.psl
+0805                     C:\Users\marci\Documents\DesignSpark PCB 11.0\Library\Default\DesignSpark.psl
+DISC04                   C:\Users\marci\Documents\DesignSpark PCB 11.0\Library\Default\DesignSpark.psl
+kandA                    D:\Elektronika\PCB_Library\MyDownloaded.psl
+LED_AAA3528LSEKJ3ZGKQBKS D:\Elektronika\PCB_Library\MyDownloaded.psl
+LED_RGB_TH               D:\Elektronika\PCB_Library\MyDownloaded.psl
+QFP80P1200X1200X120-44N  D:\Elektronika\PCB_Library\MyDownloaded.psl
+SOIC127P600X175-8N       D:\Elektronika\PCB_Library\MyDownloaded.psl
+SOIC127P1032X265-16N     D:\Elektronika\PCB_Library\MyDownloaded.psl
+TO228P991X255-3N         D:\Elektronika\PCB_Library\MyDownloaded.psl
+TO92127P460H470-3        D:\Elektronika\PCB_Library\MyDownloaded.psl
+TO92260P520H877-3        D:\Elektronika\PCB_Library\MyDownloaded.psl
+vfd_iv6                  D:\Elektronika\PCB_Library\MyDownloaded.psl
+
+Reference Names:
+================
+
+ALM_BUTTON
+ALM_BUTTON_LIGHT
+C1
+C2
+C3
+D1
+D2
+D3
+D4
+D5
+D6
+D7
+D8
+D9
+D10
+DISP1
+DISP2
+DISP3
+DISP4
+DISP5
+DISP6
+DISP7
+DISP8
+J1
+PLUS_BUTTON
+POWER
+Q1
+Q2
+Q3
+Q4
+Q5
+Q6
+Q7
+Q8
+Q9
+Q10
+Q11
+Q12
+Q13
+Q14
+Q15
+Q16
+Q17
+Q18
+Q19
+Q20
+Q21
+Q22
+Q23
+Q24
+Q25
+Q26
+Q27
+Q28
+Q29
+Q30
+Q31
+Q32
+Q33
+Q34
+R1
+R2
+R3
+R4
+R5
+R6
+R7
+R8
+R9
+R10
+R11
+R12
+R13
+R14
+R15
+R16
+R17
+R18
+R19
+R20
+R21
+R22
+R23
+R24
+R25
+R26
+R27
+R28
+R29
+R30
+R31
+R32
+R33
+R34
+R35
+R36
+R37
+R38
+R39
+R40
+R41
+R42
+R43
+R44
+R45
+R46
+R47
+R48
+R49
+R50
+R51
+R52
+R53
+R54
+R55
+R56
+R57
+R58
+R59
+R60
+R61
+R62
+R63
+R64
+R65
+R66
+R67
+R68
+R69
+R70
+R71
+R72
+R73
+R74
+R75
+R76
+R77
+R78
+R79
+R80
+R81
+SET_BUTTON
+SPEAKER
+U1
+U2
+U3
+V1
+VR1
+
+Additional items to be updated:
+===============================
+
+
+Components:
+===========
+
+    (None) 
+
+Symbols:
+========
+
+    (None) 
+
+Reference Names:
+================
+
+    (None) 
+
+Errors accessing items in the library:
+======================================
+
+
+Components:
+===========
+
+    Could not find component 'BC547A' package 'TO92260P520H877-3'
+
+Reference Names:
+================
+
+Q1
+Q3
+Q5
+Q7
+Q9
+Q11
+Q13
+Q15
+Q17
+Q19
+Q21
+Q23
+Q25
+Q27
+Q29
+Q31
+Q34
+
+
+
+Update Components Summary
+=========================
+
+Updating all components.
+(Force update of items, even if latest version)
+Update component values
+Update component value positions
+(Remove pad style exceptions on updated components)
+	Selected for update:			  14  Components
+						  13  Symbols
+	Selected items to be updated:		  14  Components
+						  13  Symbols
+	Additional items to be updated:		   0  Components
+						   0  Symbols
+Errors getting items from the library:		   1  Component 
+	  (Not found or read error)			   0  Symbols
+
+End Of Report.
