@@ -1,0 +1,24 @@
+Forward Design Changes Report
+-----------------------------
+
+Report Written:     22:18 Wednesday, January 08, 2025
+Project Path:       D:\Elektronika\PCB\vfd-clock\vfd-mcu-board\vfd-mcu-board.prj
+Design Path:        D:\Elektronika\PCB\vfd-clock\vfd-mcu-board\vfd-mcu-board.pcb
+Design Title:       
+Created:            08.01.2025 22:04:44
+Last Saved:         08.01.2025 22:15:20
+Editing Time:       13 min
+Units:              mil (precision 0)
+
+Disconnected pin "U2.16" from net "N0061".
+Disconnected pin "J3.9" from net "N0061".
+
+Deleted net "N0061".
+
+Added net "N0062".
+
+Connected pin "U2.22" to net "N0062".
+Connected pin "J3.9" to net "N0062".
+
+
+End Of Report.

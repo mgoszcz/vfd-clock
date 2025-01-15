@@ -1,0 +1,11 @@
+B - 3V  100 Ohm
+G - 2,3 V 135 ohm
+R - 2 V 150 ohm
+
+
+
+
+	R 150
+		LR  L
+		LG  LB
+	R 120		R 100
