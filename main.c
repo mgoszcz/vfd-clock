@@ -6,6 +6,10 @@
  */ 
 
 #define F_CPU 4000000
+#define SET_BUTTON PD4
+#define PLUS_BUTTON PD5
+#define ALM_BUTTON PD3
+
 #include <avr/io.h>
 #include <xc.h>
 #include <util/delay.h>
@@ -19,8 +23,11 @@ unsigned char currentDate[4] = {0, 0, 0, 0};
 unsigned char mainCounter = 0;
 unsigned char brightness = 100;
 unsigned char mode = 0;
-unsigned char buttonCounter = 0;
-bool blinker = TRUE;
+unsigned char setButtonCounter = 0;
+unsigned char plusButtonCounter = 0;
+unsigned char almButtonCounter = 0;
+bool blinker = true;
+bool alarmActive = false;
 char marker = 0;
 
 char getBrigthness() {
@@ -41,6 +48,14 @@ void displayLed() {
 	PORTC |= (1 << PC3);
 	my_delay_us(brightness);
 	PORTC &= ~(1 << PC3);
+}
+
+void almButtonLedDisplay() {
+	if (alarmActive) {
+		PORTD |= (1 << PD6);
+	} else {
+		PORTD &= ~(1 << PD6);
+	}
 }
 
 void ledDisplayAction() {
@@ -159,20 +174,57 @@ void toggleMode() {
 	}
 }
 
+void stoper() {
+	// 		displayChars(displayString);
+	// 		counter++;
+	// 		if (counter%3 == 0) {
+	// 			if (displayString[7] != 9) {
+	// 				displayString[7]++;
+	// 			} else {
+	// 				displayString[7] = 0;
+	// 				if (displayString[6] != 9) {
+	// 					displayString[6]++;
+	// 				} else {
+	// 					displayString[6] = 0;
+	// 					if (displayString[5] != 9) {
+	// 						displayString[5]++;
+	// 						} else {
+	// 						displayString[5] = 0;
+	// 						if (displayString[4] != 9) {
+	// 							displayString[4]++;
+	// 							} else {
+	// 							displayString[4] = 0;
+	// 							if (displayString[3] != 9) {
+	// 								displayString[3]++;
+	// 								} else {
+	// 								displayString[3] = 0;
+	// 								if (displayString[2] != 9) {
+	// 									displayString[2]++;
+	// 									} else {
+	// 									displayString[2] = 0;
+	// 									if (displayString[1] != 9) {
+	// 										displayString[1]++;
+	// 										} else {
+	// 										displayString[1] = 0;
+	// 										if (displayString[0] != 9) {
+	// 											displayString[0]++;
+	// 											} else {
+	// 											displayString[0] = 0;
+	// 										}
+	// 									}
+	// 								}
+	// 							}
+	// 						}
+	// 					}
+	// 				}
+	// 			}
+	// 		}
+}
+
 int main(void)
 {
     // sprawdzic blinker i jasnosc ledow po ustawieniu DDRC
-	unsigned char direction = 0, counter = 0;
-	unsigned char a, b, c, d;
-	unsigned char characters[64] = {
-		0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 
-		21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 41, 42, 
-		43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 60, 61, 62, 100, 
-		101, 102, 103, 104, 105, 106, 107, 108, 109, 110};
-	
-		int onTime = 1000;
-		
-		my_delay_ms(500);
+	my_delay_ms(500);
 	Initialise_TWI_Master();
 	getTime(true);
 	getDate(true);
@@ -192,56 +244,35 @@ int main(void)
 	while(1)
     {
 		dimmer(brightness);
-// 		displayChars(displayString);
-// 		counter++;
-// 		if (counter%3 == 0) {
-// 			if (displayString[7] != 9) {
-// 				displayString[7]++;
-// 			} else {
-// 				displayString[7] = 0;
-// 				if (displayString[6] != 9) {
-// 					displayString[6]++;
-// 				} else {
-// 					displayString[6] = 0;
-// 					if (displayString[5] != 9) {
-// 						displayString[5]++;
-// 						} else {
-// 						displayString[5] = 0;
-// 						if (displayString[4] != 9) {
-// 							displayString[4]++;
-// 							} else {
-// 							displayString[4] = 0;
-// 							if (displayString[3] != 9) {
-// 								displayString[3]++;
-// 								} else {
-// 								displayString[3] = 0;
-// 								if (displayString[2] != 9) {
-// 									displayString[2]++;
-// 									} else {
-// 									displayString[2] = 0;
-// 									if (displayString[1] != 9) {
-// 										displayString[1]++;
-// 										} else {
-// 										displayString[1] = 0;
-// 										if (displayString[0] != 9) {
-// 											displayString[0]++;
-// 											} else {
-// 											displayString[0] = 0;
-// 										}
-// 									}
-// 								}
-// 							}
-// 						}
-// 					}
-// 				}
-// 			}
-// 		}
-		if (!(PIND & (1 << PIND4))) {
-				buttonCounter++;
+		if (!(PIND & (1 << SET_BUTTON)) || !(PIND & (1 << PLUS_BUTTON)) || !(PIND & (1 << ALM_BUTTON))) {
+			if (!(PIND & (1 << SET_BUTTON))) {
+				if (setButtonCounter > 125) {
+					// time edit mode
+					setButtonCounter = 0;
+				}
+			} else {
+				setButtonCounter++;
+			}
+			if (!(PIND & (1 << PLUS_BUTTON))) plusButtonCounter++;
+			if (!(PIND & (1 << ALM_BUTTON))) {
+				if (almButtonCounter > 125) {
+					// alm edit mode
+					almButtonCounter = 0;
+				}	
+			} else {
+				almButtonCounter++;
+			}
 		} else {
-			if (buttonCounter > 10) {
+			if (setButtonCounter > 10) {
 				toggleMode();
-				buttonCounter = 0;
+				setButtonCounter = 0;
+			}
+			plusButtonCounter = 0;
+			if (almButtonCounter > 10) {
+				alarmActive = !alarmActive;
+				// save to eeprom
+				almButtonLedDisplay();
+				almButtonCounter = 0;	
 			}
 		}
 		if (mainCounter%3 == 0){
