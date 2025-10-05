@@ -28,7 +28,9 @@ unsigned char plusButtonCounter = 0;
 unsigned char almButtonCounter = 0;
 bool blinker = true;
 bool alarmActive = false;
+bool editMode = false;
 char marker = 0;
+char editIndex = 0;
 
 char getBrigthness() {
 	ADCSRA |=(1<<ADSC);
@@ -149,6 +151,31 @@ void getDate(bool ignoreMarker) {
 	displayString[7] = (currentDate[1] & 0b00001111);
 }
 
+void getEditDataDisplay() {
+	if (editIndex == 0 || editIndex == 1) {
+		displayString[7] = 0;
+		displayString[6] = 0;
+		displayString[4] = (currentTime[1] &0b00001111);
+		displayString[3] = (currentTime[1] &0b01110000)>>4;
+		displayString[1] = (currentTime[0] &0b00001111);
+		displayString[0] = (currentTime[0] &0b01110000)>>4;
+		displayString[5] = 20;
+		displayString[2] = 20;
+		if (!blinker) {
+			switch (editIndex) {
+				case 0:
+					displayString[1] = 20;
+					displayString[0] = 20;
+					break;
+				case 1:
+					displayString[3] = 20;
+					displayString[4] = 20;
+					break;
+			}
+		}
+	}
+}
+
 void getBlinker() {
 	unsigned char seconds = GetSeconds();
 	unsigned char units = seconds & 0x0F;
@@ -157,6 +184,10 @@ void getBlinker() {
 
 void getDataToDisplay() {
 	getBlinker();
+	if (editMode) {
+		getEditDataDisplay();
+		return;
+	}
 	switch (mode) {
 		case 0:
 			getTime(false);
@@ -224,6 +255,8 @@ void stoper() {
 int main(void)
 {
     // sprawdzic blinker i jasnosc ledow po ustawieniu DDRC
+	// edit mode
+	// alarm button led
 	my_delay_ms(500);
 	Initialise_TWI_Master();
 	getTime(true);
@@ -246,8 +279,8 @@ int main(void)
 		dimmer(brightness);
 		if (!(PIND & (1 << SET_BUTTON)) || !(PIND & (1 << PLUS_BUTTON)) || !(PIND & (1 << ALM_BUTTON))) {
 			if (!(PIND & (1 << SET_BUTTON))) {
-				if (setButtonCounter > 125) {
-					// time edit mode
+				if (setButtonCounter > 125 && !editMode) {
+					editMode = true;
 					setButtonCounter = 0;
 				}
 			} else {
