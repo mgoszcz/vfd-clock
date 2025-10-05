@@ -1,0 +1,1778 @@
+
+vfd-clock.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         0000017e  00000000  00000000  00000154  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  0000017e  000002e1  2**0
+                  ALLOC
+  2 .bss          00000004  00800060  00800060  00000c8c  2**0
+                  ALLOC
+  3 .comment      0000002f  00000000  00000000  00000c8c  2**0
+                  CONTENTS, READONLY
+  4 .stack.descriptors.hdr 00000046  00000000  00000000  00000cbb  2**0
+                  CONTENTS, READONLY
+  5 .debug_aranges 000001c8  00000000  00000000  00000d01  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   0000262c  00000000  00000000  00000ec9  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 00000c0c  00000000  00000000  000034f5  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   00000edc  00000000  00000000  00004101  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  000003c8  00000000  00000000  00004fe0  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    000002da  00000000  00000000  000053a8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    00000bf5  00000000  00000000  00005682  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 00000178  00000000  00000000  00006277  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 13 .text         00000004  00000b28  00000b28  00000c7c  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 14 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000063f0  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 15 .text.codeToDisplay 00000122  000003be  000003be  00000512  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 16 .progmemx.data.segmentsTable 00000008  00000197  00000197  000002eb  2**0
+                  CONTENTS, ALLOC, LOAD, READONLY, PROGMEMX
+ 17 .progmemx.data.symbolsTable 00000003  0000019f  0000019f  000002f3  2**0
+                  CONTENTS, ALLOC, LOAD, READONLY, PROGMEMX
+ 18 .progmemx.data.lettersTable 0000000f  0000017e  0000017e  000002d2  2**0
+                  CONTENTS, ALLOC, LOAD, READONLY, PROGMEMX
+ 19 .progmemx.data.digitsTable 0000000a  0000018d  0000018d  000002e1  2**0
+                  CONTENTS, ALLOC, LOAD, READONLY, PROGMEMX
+ 20 .text.my_delay_us 0000003e  0000097c  0000097c  00000ad0  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 21 .text.dimmer  0000004a  00000932  00000932  00000a86  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 22 .text.displayChars 0000021c  000001a2  000001a2  000002f6  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 23 .text.my_delay_ms 0000001e  00000a34  00000a34  00000b88  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 24 .text.displayLed 00000018  00000a8e  00000a8e  00000be2  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 25 .text.getTime 000000d8  000006c8  000006c8  0000081c  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 26 .text.getDate 000000fe  000004e0  000004e0  00000634  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 27 .text.getDataToDisplay 0000001e  00000a52  00000a52  00000ba6  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 28 .text.toggleMode 00000014  00000abc  00000abc  00000c10  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 29 .text.main    0000009c  000007a0  000007a0  000008f4  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 30 .bss.marker   00000001  00800077  00800077  00000c8c  2**0
+                  ALLOC
+ 31 .bss.buttonCounter 00000001  00800078  00800078  00000c8c  2**0
+                  ALLOC
+ 32 .bss.mode     00000001  00800079  00800079  00000c8c  2**0
+                  ALLOC
+ 33 .data.brightness 00000001  0080007a  00000b36  00000c8a  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+ 34 .bss.mainCounter 00000001  0080007b  0080007b  00000c8c  2**0
+                  ALLOC
+ 35 .bss.currentDate 00000004  0080006c  0080006c  00000c8c  2**0
+                  ALLOC
+ 36 .bss.currentTime 00000003  00800074  00800074  00000c8c  2**0
+                  ALLOC
+ 37 .bss.displayString 00000008  00800064  00800064  00000c8c  2**0
+                  ALLOC
+ 38 .text.Initialise_TWI_Master 00000008  00000aea  00000aea  00000c3e  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 39 .text.RTCRead 0000004c  0000089a  0000089a  000009ee  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 40 .text.GetSeconds 00000008  00000af2  00000af2  00000c46  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 41 .text.GetMinutes 00000008  00000afa  00000afa  00000c4e  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 42 .text.GetHours 00000008  00000b02  00000b02  00000c56  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 43 .text.GetMonthDay 00000008  00000b0a  00000b0a  00000c5e  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 44 .text.GetMonth 00000008  00000b12  00000b12  00000c66  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 45 .text.GetYear 00000008  00000b1a  00000b1a  00000c6e  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 46 .text.TWI_Master_Initialise 0000000e  00000ad0  00000ad0  00000c24  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 47 .text.TWI_Transceiver_Busy 00000006  00000b22  00000b22  00000c76  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 48 .text.WaitForTransceiverNotBusy 0000002a  000009ba  000009ba  00000b0e  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 49 .text.TWI_Start_Transceiver_With_Data 0000005e  0000083c  0000083c  00000990  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 50 .text.TWI_Get_Data_From_Transceiver 0000004c  000008e6  000008e6  00000a3a  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 51 .text.__vector_17 000000ea  000005de  000005de  00000732  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 52 .bss.TWI_bufPtr.2011 00000001  0080007c  0080007c  00000c8c  2**0
+                  ALLOC
+ 53 .bss.TWI_statusReg 00000001  0080007d  0080007d  00000c8c  2**0
+                  ALLOC
+ 54 .data.TWI_state 00000001  0080007e  00000b37  00000c8b  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+ 55 .bss.TWI_msgSize 00000001  0080007f  0080007f  00000c8c  2**0
+                  ALLOC
+ 56 .bss.TWI_buf  00000004  00800070  00800070  00000c8c  2**0
+                  ALLOC
+ 57 .text.libgcc.div 00000028  000009e4  000009e4  00000b38  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 58 .text.libgcc  0000000c  00000ade  00000ade  00000c32  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 59 .text.libgcc.mul 0000001e  00000a70  00000a70  00000bc4  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 60 .text.libgcc.div 00000028  00000a0c  00000a0c  00000b60  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 61 .text.__dummy_fini 00000002  00000b30  00000b30  00000c84  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 62 .text.__dummy_funcs_on_exit 00000002  00000b32  00000b32  00000c86  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 63 .text.__dummy_simulator_exit 00000002  00000b34  00000b34  00000c88  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 64 .text.exit    00000016  00000aa6  00000aa6  00000bfa  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 65 .text._Exit   00000004  00000b2c  00000b2c  00000c80  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 95 00 	jmp	0x12a	; 0x12a <__ctors_end>
+   4:	0c 94 94 05 	jmp	0xb28	; 0xb28 <__bad_interrupt>
+   8:	0c 94 94 05 	jmp	0xb28	; 0xb28 <__bad_interrupt>
+   c:	0c 94 94 05 	jmp	0xb28	; 0xb28 <__bad_interrupt>
+  10:	0c 94 94 05 	jmp	0xb28	; 0xb28 <__bad_interrupt>
+  14:	0c 94 94 05 	jmp	0xb28	; 0xb28 <__bad_interrupt>
+  18:	0c 94 94 05 	jmp	0xb28	; 0xb28 <__bad_interrupt>
+  1c:	0c 94 94 05 	jmp	0xb28	; 0xb28 <__bad_interrupt>
+  20:	0c 94 94 05 	jmp	0xb28	; 0xb28 <__bad_interrupt>
+  24:	0c 94 94 05 	jmp	0xb28	; 0xb28 <__bad_interrupt>
+  28:	0c 94 94 05 	jmp	0xb28	; 0xb28 <__bad_interrupt>
+  2c:	0c 94 94 05 	jmp	0xb28	; 0xb28 <__bad_interrupt>
+  30:	0c 94 94 05 	jmp	0xb28	; 0xb28 <__bad_interrupt>
+  34:	0c 94 94 05 	jmp	0xb28	; 0xb28 <__bad_interrupt>
+  38:	0c 94 94 05 	jmp	0xb28	; 0xb28 <__bad_interrupt>
+  3c:	0c 94 94 05 	jmp	0xb28	; 0xb28 <__bad_interrupt>
+  40:	0c 94 94 05 	jmp	0xb28	; 0xb28 <__bad_interrupt>
+  44:	0c 94 ef 02 	jmp	0x5de	; 0x5de <__vector_17>
+  48:	0c 94 94 05 	jmp	0xb28	; 0xb28 <__bad_interrupt>
+  4c:	0c 94 94 05 	jmp	0xb28	; 0xb28 <__bad_interrupt>
+  50:	0c 94 94 05 	jmp	0xb28	; 0xb28 <__bad_interrupt>
+  54:	ed 01       	movw	r28, r26
+  56:	f8 01       	movw	r30, r16
+  58:	06 02       	muls	r16, r22
+  5a:	17 02       	muls	r17, r23
+  5c:	28 02       	muls	r18, r24
+  5e:	3a 02       	muls	r19, r26
+  60:	4b 02       	muls	r20, r27
+  62:	66 02       	muls	r22, r22
+  64:	66 02       	muls	r22, r22
+  66:	66 02       	muls	r22, r22
+  68:	58 02       	muls	r21, r24
+  6a:	09 03       	fmul	r16, r17
+  6c:	52 03       	mulsu	r21, r18
+  6e:	52 03       	mulsu	r21, r18
+  70:	52 03       	mulsu	r21, r18
+  72:	52 03       	mulsu	r21, r18
+  74:	52 03       	mulsu	r21, r18
+  76:	52 03       	mulsu	r21, r18
+  78:	52 03       	mulsu	r21, r18
+  7a:	09 03       	fmul	r16, r17
+  7c:	52 03       	mulsu	r21, r18
+  7e:	52 03       	mulsu	r21, r18
+  80:	52 03       	mulsu	r21, r18
+  82:	52 03       	mulsu	r21, r18
+  84:	52 03       	mulsu	r21, r18
+  86:	52 03       	mulsu	r21, r18
+  88:	52 03       	mulsu	r21, r18
+  8a:	0b 03       	fmul	r16, r19
+  8c:	52 03       	mulsu	r21, r18
+  8e:	52 03       	mulsu	r21, r18
+  90:	52 03       	mulsu	r21, r18
+  92:	52 03       	mulsu	r21, r18
+  94:	52 03       	mulsu	r21, r18
+  96:	52 03       	mulsu	r21, r18
+  98:	52 03       	mulsu	r21, r18
+  9a:	52 03       	mulsu	r21, r18
+  9c:	52 03       	mulsu	r21, r18
+  9e:	52 03       	mulsu	r21, r18
+  a0:	52 03       	mulsu	r21, r18
+  a2:	52 03       	mulsu	r21, r18
+  a4:	52 03       	mulsu	r21, r18
+  a6:	52 03       	mulsu	r21, r18
+  a8:	52 03       	mulsu	r21, r18
+  aa:	0b 03       	fmul	r16, r19
+  ac:	52 03       	mulsu	r21, r18
+  ae:	52 03       	mulsu	r21, r18
+  b0:	52 03       	mulsu	r21, r18
+  b2:	52 03       	mulsu	r21, r18
+  b4:	52 03       	mulsu	r21, r18
+  b6:	52 03       	mulsu	r21, r18
+  b8:	52 03       	mulsu	r21, r18
+  ba:	52 03       	mulsu	r21, r18
+  bc:	52 03       	mulsu	r21, r18
+  be:	52 03       	mulsu	r21, r18
+  c0:	52 03       	mulsu	r21, r18
+  c2:	52 03       	mulsu	r21, r18
+  c4:	52 03       	mulsu	r21, r18
+  c6:	52 03       	mulsu	r21, r18
+  c8:	52 03       	mulsu	r21, r18
+  ca:	4f 03       	fmul	r20, r23
+  cc:	52 03       	mulsu	r21, r18
+  ce:	52 03       	mulsu	r21, r18
+  d0:	52 03       	mulsu	r21, r18
+  d2:	52 03       	mulsu	r21, r18
+  d4:	52 03       	mulsu	r21, r18
+  d6:	52 03       	mulsu	r21, r18
+  d8:	52 03       	mulsu	r21, r18
+  da:	30 03       	mulsu	r19, r16
+  dc:	52 03       	mulsu	r21, r18
+  de:	52 03       	mulsu	r21, r18
+  e0:	52 03       	mulsu	r21, r18
+  e2:	52 03       	mulsu	r21, r18
+  e4:	52 03       	mulsu	r21, r18
+  e6:	52 03       	mulsu	r21, r18
+  e8:	52 03       	mulsu	r21, r18
+  ea:	52 03       	mulsu	r21, r18
+  ec:	52 03       	mulsu	r21, r18
+  ee:	52 03       	mulsu	r21, r18
+  f0:	52 03       	mulsu	r21, r18
+  f2:	52 03       	mulsu	r21, r18
+  f4:	52 03       	mulsu	r21, r18
+  f6:	52 03       	mulsu	r21, r18
+  f8:	52 03       	mulsu	r21, r18
+  fa:	25 03       	mulsu	r18, r21
+  fc:	52 03       	mulsu	r21, r18
+  fe:	52 03       	mulsu	r21, r18
+ 100:	52 03       	mulsu	r21, r18
+ 102:	52 03       	mulsu	r21, r18
+ 104:	52 03       	mulsu	r21, r18
+ 106:	52 03       	mulsu	r21, r18
+ 108:	52 03       	mulsu	r21, r18
+ 10a:	40 03       	mulsu	r20, r16
+
+0000010c <.dinit>:
+ 10c:	00 60       	ori	r16, 0x00	; 0
+ 10e:	00 7a       	andi	r16, 0xA0	; 160
+ 110:	80 00       	.word	0x0080	; ????
+ 112:	7a 00       	.word	0x007a	; ????
+ 114:	7b 00       	.word	0x007b	; ????
+ 116:	0b 36       	cpi	r16, 0x6B	; 107
+ 118:	00 7b       	andi	r16, 0xB0	; 176
+ 11a:	00 7e       	andi	r16, 0xE0	; 224
+ 11c:	80 00       	.word	0x0080	; ????
+ 11e:	7e 00       	.word	0x007e	; ????
+ 120:	7f 00       	.word	0x007f	; ????
+ 122:	0b 37       	cpi	r16, 0x7B	; 123
+ 124:	00 7f       	andi	r16, 0xF0	; 240
+ 126:	00 80       	ld	r0, Z
+ 128:	80 00       	.word	0x0080	; ????
+
+0000012a <__ctors_end>:
+ 12a:	11 24       	eor	r1, r1
+ 12c:	1f be       	out	0x3f, r1	; 63
+ 12e:	cf e5       	ldi	r28, 0x5F	; 95
+ 130:	d4 e0       	ldi	r29, 0x04	; 4
+ 132:	de bf       	out	0x3e, r29	; 62
+ 134:	cd bf       	out	0x3d, r28	; 61
+
+00000136 <__do_copy_data>:
+ 136:	ec e0       	ldi	r30, 0x0C	; 12
+ 138:	f1 e0       	ldi	r31, 0x01	; 1
+ 13a:	41 e0       	ldi	r20, 0x01	; 1
+ 13c:	17 c0       	rjmp	.+46     	; 0x16c <__do_clear_bss+0x8>
+ 13e:	b5 91       	lpm	r27, Z+
+ 140:	a5 91       	lpm	r26, Z+
+ 142:	35 91       	lpm	r19, Z+
+ 144:	25 91       	lpm	r18, Z+
+ 146:	05 91       	lpm	r16, Z+
+ 148:	07 fd       	sbrc	r16, 7
+ 14a:	0c c0       	rjmp	.+24     	; 0x164 <__do_clear_bss>
+ 14c:	95 91       	lpm	r25, Z+
+ 14e:	85 91       	lpm	r24, Z+
+ 150:	ef 01       	movw	r28, r30
+ 152:	f9 2f       	mov	r31, r25
+ 154:	e8 2f       	mov	r30, r24
+ 156:	05 90       	lpm	r0, Z+
+ 158:	0d 92       	st	X+, r0
+ 15a:	a2 17       	cp	r26, r18
+ 15c:	b3 07       	cpc	r27, r19
+ 15e:	d9 f7       	brne	.-10     	; 0x156 <__do_copy_data+0x20>
+ 160:	fe 01       	movw	r30, r28
+ 162:	04 c0       	rjmp	.+8      	; 0x16c <__do_clear_bss+0x8>
+
+00000164 <__do_clear_bss>:
+ 164:	1d 92       	st	X+, r1
+ 166:	a2 17       	cp	r26, r18
+ 168:	b3 07       	cpc	r27, r19
+ 16a:	e1 f7       	brne	.-8      	; 0x164 <__do_clear_bss>
+ 16c:	e9 32       	cpi	r30, 0x29	; 41
+ 16e:	f4 07       	cpc	r31, r20
+ 170:	31 f7       	brne	.-52     	; 0x13e <__do_copy_data+0x8>
+ 172:	0e 94 d0 03 	call	0x7a0	; 0x7a0 <main>
+ 176:	0c 94 53 05 	jmp	0xaa6	; 0xaa6 <exit>
+
+0000017a <_exit>:
+ 17a:	f8 94       	cli
+
+0000017c <__stop_program>:
+ 17c:	ff cf       	rjmp	.-2      	; 0x17c <__stop_program>
+
+Disassembly of section .text:
+
+00000b28 <__bad_interrupt>:
+ b28:	0c 94 00 00 	jmp	0	; 0x0 <__TEXT_REGION_ORIGIN__>
+
+Disassembly of section .text.codeToDisplay:
+
+000003be <codeToDisplay>:
+
+const unsigned char symbolsTable[3] = {0b01100011, 0b10000000, 0b01000000};
+
+const unsigned char segmentsTable[8] = {0b1, 0b10, 0b100, 0b1000, 0b10000, 0b100000, 0b1000000, 0b10000000};
+	
+unsigned char codeToDisplay(int code) {
+ 3be:	9c 01       	movw	r18, r24
+	switch (code / 10) {
+ 3c0:	6a e0       	ldi	r22, 0x0A	; 10
+ 3c2:	70 e0       	ldi	r23, 0x00	; 0
+ 3c4:	0e 94 f2 04 	call	0x9e4	; 0x9e4 <__divmodhi4>
+ 3c8:	6b 30       	cpi	r22, 0x0B	; 11
+ 3ca:	71 05       	cpc	r23, r1
+ 3cc:	08 f0       	brcs	.+2      	; 0x3d0 <codeToDisplay+0x12>
+ 3ce:	7e c0       	rjmp	.+252    	; 0x4cc <__stack+0x6d>
+ 3d0:	fb 01       	movw	r30, r22
+ 3d2:	e6 5d       	subi	r30, 0xD6	; 214
+ 3d4:	ff 4f       	sbci	r31, 0xFF	; 255
+ 3d6:	0c 94 6f 05 	jmp	0xade	; 0xade <__tablejump2__>
+		case 0:
+			return digitsTable[code];
+ 3da:	c9 01       	movw	r24, r18
+ 3dc:	33 0f       	add	r19, r19
+ 3de:	aa 0b       	sbc	r26, r26
+ 3e0:	83 57       	subi	r24, 0x73	; 115
+ 3e2:	9e 4f       	sbci	r25, 0xFE	; 254
+ 3e4:	af 4f       	sbci	r26, 0xFF	; 255
+ 3e6:	fc 01       	movw	r30, r24
+ 3e8:	84 91       	lpm	r24, Z
+ 3ea:	a7 fd       	sbrc	r26, 7
+ 3ec:	80 81       	ld	r24, Z
+ 3ee:	08 95       	ret
+		case 1:
+			return digitsTable[code - 10] + symbolsTable[1];
+ 3f0:	c9 01       	movw	r24, r18
+ 3f2:	0a 97       	sbiw	r24, 0x0a	; 10
+ 3f4:	09 2e       	mov	r0, r25
+ 3f6:	00 0c       	add	r0, r0
+ 3f8:	aa 0b       	sbc	r26, r26
+ 3fa:	83 57       	subi	r24, 0x73	; 115
+ 3fc:	9e 4f       	sbci	r25, 0xFE	; 254
+ 3fe:	af 4f       	sbci	r26, 0xFF	; 255
+ 400:	fc 01       	movw	r30, r24
+ 402:	84 91       	lpm	r24, Z
+ 404:	a7 fd       	sbrc	r26, 7
+ 406:	80 81       	ld	r24, Z
+ 408:	80 58       	subi	r24, 0x80	; 128
+ 40a:	08 95       	ret
+		case 2:
+			if (code == 20) {
+ 40c:	24 31       	cpi	r18, 0x14	; 20
+ 40e:	31 05       	cpc	r19, r1
+ 410:	09 f4       	brne	.+2      	; 0x414 <__DATA_REGION_LENGTH__+0x14>
+ 412:	5e c0       	rjmp	.+188    	; 0x4d0 <__stack+0x71>
+				return 0;
+			}
+			return lettersTable[code - 21];
+ 414:	c9 01       	movw	r24, r18
+ 416:	45 97       	sbiw	r24, 0x15	; 21
+ 418:	09 2e       	mov	r0, r25
+ 41a:	00 0c       	add	r0, r0
+ 41c:	aa 0b       	sbc	r26, r26
+ 41e:	82 58       	subi	r24, 0x82	; 130
+ 420:	9e 4f       	sbci	r25, 0xFE	; 254
+ 422:	af 4f       	sbci	r26, 0xFF	; 255
+ 424:	fc 01       	movw	r30, r24
+ 426:	84 91       	lpm	r24, Z
+ 428:	a7 fd       	sbrc	r26, 7
+ 42a:	80 81       	ld	r24, Z
+ 42c:	08 95       	ret
+		case 3:
+			if (code > 35) return 0;
+ 42e:	24 32       	cpi	r18, 0x24	; 36
+ 430:	31 05       	cpc	r19, r1
+ 432:	0c f0       	brlt	.+2      	; 0x436 <__DATA_REGION_LENGTH__+0x36>
+ 434:	4f c0       	rjmp	.+158    	; 0x4d4 <__stack+0x75>
+			return lettersTable[code - 21];
+ 436:	c9 01       	movw	r24, r18
+ 438:	45 97       	sbiw	r24, 0x15	; 21
+ 43a:	09 2e       	mov	r0, r25
+ 43c:	00 0c       	add	r0, r0
+ 43e:	aa 0b       	sbc	r26, r26
+ 440:	82 58       	subi	r24, 0x82	; 130
+ 442:	9e 4f       	sbci	r25, 0xFE	; 254
+ 444:	af 4f       	sbci	r26, 0xFF	; 255
+ 446:	fc 01       	movw	r30, r24
+ 448:	84 91       	lpm	r24, Z
+ 44a:	a7 fd       	sbrc	r26, 7
+ 44c:	80 81       	ld	r24, Z
+ 44e:	08 95       	ret
+		case 4:
+			if (code == 40) {
+ 450:	28 32       	cpi	r18, 0x28	; 40
+ 452:	31 05       	cpc	r19, r1
+ 454:	09 f4       	brne	.+2      	; 0x458 <__DATA_REGION_LENGTH__+0x58>
+ 456:	40 c0       	rjmp	.+128    	; 0x4d8 <__stack+0x79>
+				return 0;
+			}
+			return lettersTable[code - 41] + symbolsTable[1];
+ 458:	c9 01       	movw	r24, r18
+ 45a:	89 97       	sbiw	r24, 0x29	; 41
+ 45c:	09 2e       	mov	r0, r25
+ 45e:	00 0c       	add	r0, r0
+ 460:	aa 0b       	sbc	r26, r26
+ 462:	82 58       	subi	r24, 0x82	; 130
+ 464:	9e 4f       	sbci	r25, 0xFE	; 254
+ 466:	af 4f       	sbci	r26, 0xFF	; 255
+ 468:	fc 01       	movw	r30, r24
+ 46a:	84 91       	lpm	r24, Z
+ 46c:	a7 fd       	sbrc	r26, 7
+ 46e:	80 81       	ld	r24, Z
+ 470:	80 58       	subi	r24, 0x80	; 128
+ 472:	08 95       	ret
+		case 5:
+			if (code > 55) return 0;
+ 474:	28 33       	cpi	r18, 0x38	; 56
+ 476:	31 05       	cpc	r19, r1
+ 478:	8c f5       	brge	.+98     	; 0x4dc <__stack+0x7d>
+			return lettersTable[code - 41] + symbolsTable[1];
+ 47a:	c9 01       	movw	r24, r18
+ 47c:	89 97       	sbiw	r24, 0x29	; 41
+ 47e:	09 2e       	mov	r0, r25
+ 480:	00 0c       	add	r0, r0
+ 482:	aa 0b       	sbc	r26, r26
+ 484:	82 58       	subi	r24, 0x82	; 130
+ 486:	9e 4f       	sbci	r25, 0xFE	; 254
+ 488:	af 4f       	sbci	r26, 0xFF	; 255
+ 48a:	fc 01       	movw	r30, r24
+ 48c:	84 91       	lpm	r24, Z
+ 48e:	a7 fd       	sbrc	r26, 7
+ 490:	80 81       	ld	r24, Z
+ 492:	80 58       	subi	r24, 0x80	; 128
+ 494:	08 95       	ret
+		case 6:
+			return symbolsTable[code - 60];
+ 496:	c9 01       	movw	r24, r18
+ 498:	cc 97       	sbiw	r24, 0x3c	; 60
+ 49a:	09 2e       	mov	r0, r25
+ 49c:	00 0c       	add	r0, r0
+ 49e:	aa 0b       	sbc	r26, r26
+ 4a0:	81 56       	subi	r24, 0x61	; 97
+ 4a2:	9e 4f       	sbci	r25, 0xFE	; 254
+ 4a4:	af 4f       	sbci	r26, 0xFF	; 255
+ 4a6:	fc 01       	movw	r30, r24
+ 4a8:	84 91       	lpm	r24, Z
+ 4aa:	a7 fd       	sbrc	r26, 7
+ 4ac:	80 81       	ld	r24, Z
+ 4ae:	08 95       	ret
+		case 10:
+			return segmentsTable[code - 100];
+ 4b0:	c9 01       	movw	r24, r18
+ 4b2:	84 56       	subi	r24, 0x64	; 100
+ 4b4:	91 09       	sbc	r25, r1
+ 4b6:	09 2e       	mov	r0, r25
+ 4b8:	00 0c       	add	r0, r0
+ 4ba:	aa 0b       	sbc	r26, r26
+ 4bc:	89 56       	subi	r24, 0x69	; 105
+ 4be:	9e 4f       	sbci	r25, 0xFE	; 254
+ 4c0:	af 4f       	sbci	r26, 0xFF	; 255
+ 4c2:	fc 01       	movw	r30, r24
+ 4c4:	84 91       	lpm	r24, Z
+ 4c6:	a7 fd       	sbrc	r26, 7
+ 4c8:	80 81       	ld	r24, Z
+ 4ca:	08 95       	ret
+	}
+	return 0;
+ 4cc:	80 e0       	ldi	r24, 0x00	; 0
+ 4ce:	08 95       	ret
+			return digitsTable[code];
+		case 1:
+			return digitsTable[code - 10] + symbolsTable[1];
+		case 2:
+			if (code == 20) {
+				return 0;
+ 4d0:	80 e0       	ldi	r24, 0x00	; 0
+ 4d2:	08 95       	ret
+			}
+			return lettersTable[code - 21];
+		case 3:
+			if (code > 35) return 0;
+ 4d4:	80 e0       	ldi	r24, 0x00	; 0
+ 4d6:	08 95       	ret
+			return lettersTable[code - 21];
+		case 4:
+			if (code == 40) {
+				return 0;
+ 4d8:	80 e0       	ldi	r24, 0x00	; 0
+ 4da:	08 95       	ret
+			}
+			return lettersTable[code - 41] + symbolsTable[1];
+		case 5:
+			if (code > 55) return 0;
+ 4dc:	80 e0       	ldi	r24, 0x00	; 0
+			return symbolsTable[code - 60];
+		case 10:
+			return segmentsTable[code - 100];
+	}
+	return 0;
+ 4de:	08 95       	ret
+
+Disassembly of section .text.my_delay_us:
+
+0000097c <my_delay_us>:
+	TIME_ON = 100;
+}
+	
+void my_delay_us(int microseconds) {
+	int micro = microseconds % 1000;
+	int mili = microseconds / 1000;
+ 97c:	68 ee       	ldi	r22, 0xE8	; 232
+ 97e:	73 e0       	ldi	r23, 0x03	; 3
+ 980:	0e 94 f2 04 	call	0x9e4	; 0x9e4 <__divmodhi4>
+	for (int i=0; i<mili; i++) {
+ 984:	20 e0       	ldi	r18, 0x00	; 0
+ 986:	30 e0       	ldi	r19, 0x00	; 0
+ 988:	08 c0       	rjmp	.+16     	; 0x99a <my_delay_us+0x1e>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 98a:	e7 ee       	ldi	r30, 0xE7	; 231
+ 98c:	f3 e0       	ldi	r31, 0x03	; 3
+ 98e:	31 97       	sbiw	r30, 0x01	; 1
+ 990:	f1 f7       	brne	.-4      	; 0x98e <my_delay_us+0x12>
+ 992:	00 c0       	rjmp	.+0      	; 0x994 <my_delay_us+0x18>
+ 994:	00 00       	nop
+ 996:	2f 5f       	subi	r18, 0xFF	; 255
+ 998:	3f 4f       	sbci	r19, 0xFF	; 255
+ 99a:	26 17       	cp	r18, r22
+ 99c:	37 07       	cpc	r19, r23
+ 99e:	ac f3       	brlt	.-22     	; 0x98a <my_delay_us+0xe>
+ 9a0:	20 e0       	ldi	r18, 0x00	; 0
+ 9a2:	30 e0       	ldi	r19, 0x00	; 0
+ 9a4:	06 c0       	rjmp	.+12     	; 0x9b2 <my_delay_us+0x36>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 9a6:	fd e0       	ldi	r31, 0x0D	; 13
+ 9a8:	fa 95       	dec	r31
+ 9aa:	f1 f7       	brne	.-4      	; 0x9a8 <my_delay_us+0x2c>
+ 9ac:	00 00       	nop
+		_delay_ms(1);
+	}
+	for (int i=0; i< micro; i+= 10) {
+ 9ae:	26 5f       	subi	r18, 0xF6	; 246
+ 9b0:	3f 4f       	sbci	r19, 0xFF	; 255
+ 9b2:	28 17       	cp	r18, r24
+ 9b4:	39 07       	cpc	r19, r25
+ 9b6:	bc f3       	brlt	.-18     	; 0x9a6 <my_delay_us+0x2a>
+		_delay_us(10);
+	}
+}
+ 9b8:	08 95       	ret
+
+Disassembly of section .text.dimmer:
+
+00000932 <dimmer>:
+unsigned int TIME_OFF, TIME_ON;
+bool separator_on = false;
+
+void displayInit() {
+	TIME_OFF = 1900;
+	TIME_ON = 100;
+ 932:	44 e1       	ldi	r20, 0x14	; 20
+ 934:	9c 01       	movw	r18, r24
+ 936:	42 9f       	mul	r20, r18
+ 938:	c0 01       	movw	r24, r0
+ 93a:	43 9f       	mul	r20, r19
+ 93c:	90 0d       	add	r25, r0
+ 93e:	11 24       	eor	r1, r1
+ 940:	9c 01       	movw	r18, r24
+ 942:	36 95       	lsr	r19
+ 944:	27 95       	ror	r18
+ 946:	36 95       	lsr	r19
+ 948:	27 95       	ror	r18
+ 94a:	ab e7       	ldi	r26, 0x7B	; 123
+ 94c:	b4 e1       	ldi	r27, 0x14	; 20
+ 94e:	0e 94 38 05 	call	0xa70	; 0xa70 <__umulhisi3>
+ 952:	96 95       	lsr	r25
+ 954:	87 95       	ror	r24
+ 956:	44 e6       	ldi	r20, 0x64	; 100
+ 958:	48 9f       	mul	r20, r24
+ 95a:	90 01       	movw	r18, r0
+ 95c:	49 9f       	mul	r20, r25
+ 95e:	30 0d       	add	r19, r0
+ 960:	11 24       	eor	r1, r1
+ 962:	30 93 61 00 	sts	0x0061, r19	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+ 966:	20 93 60 00 	sts	0x0060, r18	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 96a:	80 ed       	ldi	r24, 0xD0	; 208
+ 96c:	97 e0       	ldi	r25, 0x07	; 7
+ 96e:	82 1b       	sub	r24, r18
+ 970:	93 0b       	sbc	r25, r19
+ 972:	90 93 63 00 	sts	0x0063, r25	; 0x800063 <TIME_OFF+0x1>
+ 976:	80 93 62 00 	sts	0x0062, r24	; 0x800062 <TIME_OFF>
+ 97a:	08 95       	ret
+
+Disassembly of section .text.displayChars:
+
+000001a2 <displayChars>:
+ 1a2:	cf 93       	push	r28
+ 1a4:	df 93       	push	r29
+ 1a6:	ec 01       	movw	r28, r24
+ 1a8:	88 81       	ld	r24, Y
+ 1aa:	90 e0       	ldi	r25, 0x00	; 0
+ 1ac:	0e 94 df 01 	call	0x3be	; 0x3be <codeToDisplay>
+ 1b0:	88 bb       	out	0x18, r24	; 24
+ 1b2:	80 91 62 00 	lds	r24, 0x0062	; 0x800062 <TIME_OFF>
+ 1b6:	90 91 63 00 	lds	r25, 0x0063	; 0x800063 <TIME_OFF+0x1>
+ 1ba:	0e 94 be 04 	call	0x97c	; 0x97c <my_delay_us>
+ 1be:	88 81       	ld	r24, Y
+ 1c0:	90 e0       	ldi	r25, 0x00	; 0
+ 1c2:	0e 94 df 01 	call	0x3be	; 0x3be <codeToDisplay>
+ 1c6:	88 23       	and	r24, r24
+ 1c8:	19 f0       	breq	.+6      	; 0x1d0 <displayChars+0x2e>
+ 1ca:	8b b3       	in	r24, 0x1b	; 27
+ 1cc:	84 60       	ori	r24, 0x04	; 4
+ 1ce:	8b bb       	out	0x1b, r24	; 27
+ 1d0:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 1d4:	90 91 61 00 	lds	r25, 0x0061	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+ 1d8:	0e 94 be 04 	call	0x97c	; 0x97c <my_delay_us>
+ 1dc:	8b b3       	in	r24, 0x1b	; 27
+ 1de:	8b 7f       	andi	r24, 0xFB	; 251
+ 1e0:	8b bb       	out	0x1b, r24	; 27
+ 1e2:	8d e0       	ldi	r24, 0x0D	; 13
+ 1e4:	8a 95       	dec	r24
+ 1e6:	f1 f7       	brne	.-4      	; 0x1e4 <displayChars+0x42>
+ 1e8:	00 00       	nop
+ 1ea:	89 81       	ldd	r24, Y+1	; 0x01
+ 1ec:	90 e0       	ldi	r25, 0x00	; 0
+ 1ee:	0e 94 df 01 	call	0x3be	; 0x3be <codeToDisplay>
+ 1f2:	88 bb       	out	0x18, r24	; 24
+ 1f4:	80 91 62 00 	lds	r24, 0x0062	; 0x800062 <TIME_OFF>
+ 1f8:	90 91 63 00 	lds	r25, 0x0063	; 0x800063 <TIME_OFF+0x1>
+ 1fc:	0e 94 be 04 	call	0x97c	; 0x97c <my_delay_us>
+ 200:	89 81       	ldd	r24, Y+1	; 0x01
+ 202:	90 e0       	ldi	r25, 0x00	; 0
+ 204:	0e 94 df 01 	call	0x3be	; 0x3be <codeToDisplay>
+ 208:	88 23       	and	r24, r24
+ 20a:	19 f0       	breq	.+6      	; 0x212 <__EEPROM_REGION_LENGTH__+0x12>
+ 20c:	8b b3       	in	r24, 0x1b	; 27
+ 20e:	88 60       	ori	r24, 0x08	; 8
+ 210:	8b bb       	out	0x1b, r24	; 27
+ 212:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 216:	90 91 61 00 	lds	r25, 0x0061	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+ 21a:	0e 94 be 04 	call	0x97c	; 0x97c <my_delay_us>
+ 21e:	8b b3       	in	r24, 0x1b	; 27
+ 220:	87 7f       	andi	r24, 0xF7	; 247
+ 222:	8b bb       	out	0x1b, r24	; 27
+ 224:	8d e0       	ldi	r24, 0x0D	; 13
+ 226:	8a 95       	dec	r24
+ 228:	f1 f7       	brne	.-4      	; 0x226 <__EEPROM_REGION_LENGTH__+0x26>
+ 22a:	00 00       	nop
+ 22c:	8a 81       	ldd	r24, Y+2	; 0x02
+ 22e:	90 e0       	ldi	r25, 0x00	; 0
+ 230:	0e 94 df 01 	call	0x3be	; 0x3be <codeToDisplay>
+ 234:	88 bb       	out	0x18, r24	; 24
+ 236:	80 91 62 00 	lds	r24, 0x0062	; 0x800062 <TIME_OFF>
+ 23a:	90 91 63 00 	lds	r25, 0x0063	; 0x800063 <TIME_OFF+0x1>
+ 23e:	0e 94 be 04 	call	0x97c	; 0x97c <my_delay_us>
+ 242:	8a 81       	ldd	r24, Y+2	; 0x02
+ 244:	90 e0       	ldi	r25, 0x00	; 0
+ 246:	0e 94 df 01 	call	0x3be	; 0x3be <codeToDisplay>
+ 24a:	88 23       	and	r24, r24
+ 24c:	19 f0       	breq	.+6      	; 0x254 <__EEPROM_REGION_LENGTH__+0x54>
+ 24e:	8b b3       	in	r24, 0x1b	; 27
+ 250:	80 61       	ori	r24, 0x10	; 16
+ 252:	8b bb       	out	0x1b, r24	; 27
+ 254:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 258:	90 91 61 00 	lds	r25, 0x0061	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+ 25c:	0e 94 be 04 	call	0x97c	; 0x97c <my_delay_us>
+ 260:	8b b3       	in	r24, 0x1b	; 27
+ 262:	8f 7e       	andi	r24, 0xEF	; 239
+ 264:	8b bb       	out	0x1b, r24	; 27
+ 266:	8d e0       	ldi	r24, 0x0D	; 13
+ 268:	8a 95       	dec	r24
+ 26a:	f1 f7       	brne	.-4      	; 0x268 <__EEPROM_REGION_LENGTH__+0x68>
+ 26c:	00 00       	nop
+ 26e:	8b 81       	ldd	r24, Y+3	; 0x03
+ 270:	90 e0       	ldi	r25, 0x00	; 0
+ 272:	0e 94 df 01 	call	0x3be	; 0x3be <codeToDisplay>
+ 276:	88 bb       	out	0x18, r24	; 24
+ 278:	80 91 62 00 	lds	r24, 0x0062	; 0x800062 <TIME_OFF>
+ 27c:	90 91 63 00 	lds	r25, 0x0063	; 0x800063 <TIME_OFF+0x1>
+ 280:	0e 94 be 04 	call	0x97c	; 0x97c <my_delay_us>
+ 284:	8b 81       	ldd	r24, Y+3	; 0x03
+ 286:	90 e0       	ldi	r25, 0x00	; 0
+ 288:	0e 94 df 01 	call	0x3be	; 0x3be <codeToDisplay>
+ 28c:	88 23       	and	r24, r24
+ 28e:	19 f0       	breq	.+6      	; 0x296 <__EEPROM_REGION_LENGTH__+0x96>
+ 290:	8b b3       	in	r24, 0x1b	; 27
+ 292:	80 62       	ori	r24, 0x20	; 32
+ 294:	8b bb       	out	0x1b, r24	; 27
+ 296:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 29a:	90 91 61 00 	lds	r25, 0x0061	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+ 29e:	0e 94 be 04 	call	0x97c	; 0x97c <my_delay_us>
+ 2a2:	8b b3       	in	r24, 0x1b	; 27
+ 2a4:	8f 7d       	andi	r24, 0xDF	; 223
+ 2a6:	8b bb       	out	0x1b, r24	; 27
+ 2a8:	8d e0       	ldi	r24, 0x0D	; 13
+ 2aa:	8a 95       	dec	r24
+ 2ac:	f1 f7       	brne	.-4      	; 0x2aa <__EEPROM_REGION_LENGTH__+0xaa>
+ 2ae:	00 00       	nop
+ 2b0:	8c 81       	ldd	r24, Y+4	; 0x04
+ 2b2:	90 e0       	ldi	r25, 0x00	; 0
+ 2b4:	0e 94 df 01 	call	0x3be	; 0x3be <codeToDisplay>
+ 2b8:	88 bb       	out	0x18, r24	; 24
+ 2ba:	80 91 62 00 	lds	r24, 0x0062	; 0x800062 <TIME_OFF>
+ 2be:	90 91 63 00 	lds	r25, 0x0063	; 0x800063 <TIME_OFF+0x1>
+ 2c2:	0e 94 be 04 	call	0x97c	; 0x97c <my_delay_us>
+ 2c6:	8c 81       	ldd	r24, Y+4	; 0x04
+ 2c8:	90 e0       	ldi	r25, 0x00	; 0
+ 2ca:	0e 94 df 01 	call	0x3be	; 0x3be <codeToDisplay>
+ 2ce:	88 23       	and	r24, r24
+ 2d0:	19 f0       	breq	.+6      	; 0x2d8 <__EEPROM_REGION_LENGTH__+0xd8>
+ 2d2:	8b b3       	in	r24, 0x1b	; 27
+ 2d4:	80 64       	ori	r24, 0x40	; 64
+ 2d6:	8b bb       	out	0x1b, r24	; 27
+ 2d8:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 2dc:	90 91 61 00 	lds	r25, 0x0061	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+ 2e0:	0e 94 be 04 	call	0x97c	; 0x97c <my_delay_us>
+ 2e4:	8b b3       	in	r24, 0x1b	; 27
+ 2e6:	8f 7b       	andi	r24, 0xBF	; 191
+ 2e8:	8b bb       	out	0x1b, r24	; 27
+ 2ea:	8d e0       	ldi	r24, 0x0D	; 13
+ 2ec:	8a 95       	dec	r24
+ 2ee:	f1 f7       	brne	.-4      	; 0x2ec <__EEPROM_REGION_LENGTH__+0xec>
+ 2f0:	00 00       	nop
+ 2f2:	8d 81       	ldd	r24, Y+5	; 0x05
+ 2f4:	90 e0       	ldi	r25, 0x00	; 0
+ 2f6:	0e 94 df 01 	call	0x3be	; 0x3be <codeToDisplay>
+ 2fa:	88 bb       	out	0x18, r24	; 24
+ 2fc:	80 91 62 00 	lds	r24, 0x0062	; 0x800062 <TIME_OFF>
+ 300:	90 91 63 00 	lds	r25, 0x0063	; 0x800063 <TIME_OFF+0x1>
+ 304:	0e 94 be 04 	call	0x97c	; 0x97c <my_delay_us>
+ 308:	8d 81       	ldd	r24, Y+5	; 0x05
+ 30a:	90 e0       	ldi	r25, 0x00	; 0
+ 30c:	0e 94 df 01 	call	0x3be	; 0x3be <codeToDisplay>
+ 310:	88 23       	and	r24, r24
+ 312:	19 f0       	breq	.+6      	; 0x31a <__EEPROM_REGION_LENGTH__+0x11a>
+ 314:	8b b3       	in	r24, 0x1b	; 27
+ 316:	80 68       	ori	r24, 0x80	; 128
+ 318:	8b bb       	out	0x1b, r24	; 27
+ 31a:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 31e:	90 91 61 00 	lds	r25, 0x0061	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+ 322:	0e 94 be 04 	call	0x97c	; 0x97c <my_delay_us>
+ 326:	8b b3       	in	r24, 0x1b	; 27
+ 328:	8f 77       	andi	r24, 0x7F	; 127
+ 32a:	8b bb       	out	0x1b, r24	; 27
+ 32c:	8d e0       	ldi	r24, 0x0D	; 13
+ 32e:	8a 95       	dec	r24
+ 330:	f1 f7       	brne	.-4      	; 0x32e <__EEPROM_REGION_LENGTH__+0x12e>
+ 332:	00 00       	nop
+ 334:	8e 81       	ldd	r24, Y+6	; 0x06
+ 336:	90 e0       	ldi	r25, 0x00	; 0
+ 338:	0e 94 df 01 	call	0x3be	; 0x3be <codeToDisplay>
+ 33c:	88 bb       	out	0x18, r24	; 24
+ 33e:	80 91 62 00 	lds	r24, 0x0062	; 0x800062 <TIME_OFF>
+ 342:	90 91 63 00 	lds	r25, 0x0063	; 0x800063 <TIME_OFF+0x1>
+ 346:	0e 94 be 04 	call	0x97c	; 0x97c <my_delay_us>
+ 34a:	8e 81       	ldd	r24, Y+6	; 0x06
+ 34c:	90 e0       	ldi	r25, 0x00	; 0
+ 34e:	0e 94 df 01 	call	0x3be	; 0x3be <codeToDisplay>
+ 352:	88 23       	and	r24, r24
+ 354:	19 f0       	breq	.+6      	; 0x35c <__EEPROM_REGION_LENGTH__+0x15c>
+ 356:	82 b3       	in	r24, 0x12	; 18
+ 358:	81 60       	ori	r24, 0x01	; 1
+ 35a:	82 bb       	out	0x12, r24	; 18
+ 35c:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 360:	90 91 61 00 	lds	r25, 0x0061	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+ 364:	0e 94 be 04 	call	0x97c	; 0x97c <my_delay_us>
+ 368:	82 b3       	in	r24, 0x12	; 18
+ 36a:	8e 7f       	andi	r24, 0xFE	; 254
+ 36c:	82 bb       	out	0x12, r24	; 18
+ 36e:	8d e0       	ldi	r24, 0x0D	; 13
+ 370:	8a 95       	dec	r24
+ 372:	f1 f7       	brne	.-4      	; 0x370 <__EEPROM_REGION_LENGTH__+0x170>
+ 374:	00 00       	nop
+ 376:	8f 81       	ldd	r24, Y+7	; 0x07
+ 378:	90 e0       	ldi	r25, 0x00	; 0
+ 37a:	0e 94 df 01 	call	0x3be	; 0x3be <codeToDisplay>
+ 37e:	88 bb       	out	0x18, r24	; 24
+ 380:	80 91 62 00 	lds	r24, 0x0062	; 0x800062 <TIME_OFF>
+ 384:	90 91 63 00 	lds	r25, 0x0063	; 0x800063 <TIME_OFF+0x1>
+ 388:	0e 94 be 04 	call	0x97c	; 0x97c <my_delay_us>
+ 38c:	8f 81       	ldd	r24, Y+7	; 0x07
+ 38e:	90 e0       	ldi	r25, 0x00	; 0
+ 390:	0e 94 df 01 	call	0x3be	; 0x3be <codeToDisplay>
+ 394:	88 23       	and	r24, r24
+ 396:	19 f0       	breq	.+6      	; 0x39e <__EEPROM_REGION_LENGTH__+0x19e>
+ 398:	82 b3       	in	r24, 0x12	; 18
+ 39a:	82 60       	ori	r24, 0x02	; 2
+ 39c:	82 bb       	out	0x12, r24	; 18
+ 39e:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 3a2:	90 91 61 00 	lds	r25, 0x0061	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+ 3a6:	0e 94 be 04 	call	0x97c	; 0x97c <my_delay_us>
+ 3aa:	82 b3       	in	r24, 0x12	; 18
+ 3ac:	8d 7f       	andi	r24, 0xFD	; 253
+ 3ae:	82 bb       	out	0x12, r24	; 18
+ 3b0:	8d e0       	ldi	r24, 0x0D	; 13
+ 3b2:	8a 95       	dec	r24
+ 3b4:	f1 f7       	brne	.-4      	; 0x3b2 <__EEPROM_REGION_LENGTH__+0x1b2>
+ 3b6:	00 00       	nop
+ 3b8:	df 91       	pop	r29
+ 3ba:	cf 91       	pop	r28
+ 3bc:	08 95       	ret
+
+Disassembly of section .text.my_delay_ms:
+
+00000a34 <my_delay_ms>:
+	if (r > 100) r = 100;
+	return r;
+}
+
+void my_delay_ms(int miliseconds) {
+	for (int i=0; i<miliseconds; i++) {
+ a34:	20 e0       	ldi	r18, 0x00	; 0
+ a36:	30 e0       	ldi	r19, 0x00	; 0
+ a38:	08 c0       	rjmp	.+16     	; 0xa4a <my_delay_ms+0x16>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ a3a:	e7 ee       	ldi	r30, 0xE7	; 231
+ a3c:	f3 e0       	ldi	r31, 0x03	; 3
+ a3e:	31 97       	sbiw	r30, 0x01	; 1
+ a40:	f1 f7       	brne	.-4      	; 0xa3e <my_delay_ms+0xa>
+ a42:	00 c0       	rjmp	.+0      	; 0xa44 <my_delay_ms+0x10>
+ a44:	00 00       	nop
+ a46:	2f 5f       	subi	r18, 0xFF	; 255
+ a48:	3f 4f       	sbci	r19, 0xFF	; 255
+ a4a:	28 17       	cp	r18, r24
+ a4c:	39 07       	cpc	r19, r25
+ a4e:	ac f3       	brlt	.-22     	; 0xa3a <my_delay_ms+0x6>
+		_delay_ms(1);
+	}
+}
+ a50:	08 95       	ret
+
+Disassembly of section .text.displayLed:
+
+00000a8e <displayLed>:
+
+void displayLed() {
+	PORTC |= (1 << PC3);
+ a8e:	85 b3       	in	r24, 0x15	; 21
+ a90:	88 60       	ori	r24, 0x08	; 8
+ a92:	85 bb       	out	0x15, r24	; 21
+	my_delay_us(brightness);
+ a94:	80 91 7a 00 	lds	r24, 0x007A	; 0x80007a <brightness>
+ a98:	90 e0       	ldi	r25, 0x00	; 0
+ a9a:	0e 94 be 04 	call	0x97c	; 0x97c <my_delay_us>
+	PORTC &= ~(1 << PC3);
+ a9e:	85 b3       	in	r24, 0x15	; 21
+ aa0:	87 7f       	andi	r24, 0xF7	; 247
+ aa2:	85 bb       	out	0x15, r24	; 21
+ aa4:	08 95       	ret
+
+Disassembly of section .text.getTime:
+
+000006c8 <getTime>:
+	ADCSRA |=(1<<ADSC);
+	char r = ADC / 10;
+	ADCSRA &= ~(1<<ADSC);
+	if (r > 100) r = 100;
+	return r;
+}
+ 6c8:	cf 93       	push	r28
+ 6ca:	df 93       	push	r29
+ 6cc:	88 23       	and	r24, r24
+ 6ce:	69 f0       	breq	.+26     	; 0x6ea <getTime+0x22>
+ 6d0:	0e 94 79 05 	call	0xaf2	; 0xaf2 <GetSeconds>
+ 6d4:	c4 e7       	ldi	r28, 0x74	; 116
+ 6d6:	d0 e0       	ldi	r29, 0x00	; 0
+ 6d8:	8a 83       	std	Y+2, r24	; 0x02
+ 6da:	0e 94 7d 05 	call	0xafa	; 0xafa <GetMinutes>
+ 6de:	89 83       	std	Y+1, r24	; 0x01
+ 6e0:	0e 94 81 05 	call	0xb02	; 0xb02 <GetHours>
+ 6e4:	8f 73       	andi	r24, 0x3F	; 63
+ 6e6:	88 83       	st	Y, r24
+ 6e8:	20 c0       	rjmp	.+64     	; 0x72a <getTime+0x62>
+ 6ea:	80 91 77 00 	lds	r24, 0x0077	; 0x800077 <marker>
+ 6ee:	81 30       	cpi	r24, 0x01	; 1
+ 6f0:	49 f0       	breq	.+18     	; 0x704 <getTime+0x3c>
+ 6f2:	18 f0       	brcs	.+6      	; 0x6fa <getTime+0x32>
+ 6f4:	82 30       	cpi	r24, 0x02	; 2
+ 6f6:	59 f0       	breq	.+22     	; 0x70e <getTime+0x46>
+ 6f8:	0f c0       	rjmp	.+30     	; 0x718 <getTime+0x50>
+ 6fa:	0e 94 79 05 	call	0xaf2	; 0xaf2 <GetSeconds>
+ 6fe:	80 93 76 00 	sts	0x0076, r24	; 0x800076 <currentTime+0x2>
+ 702:	0a c0       	rjmp	.+20     	; 0x718 <getTime+0x50>
+ 704:	0e 94 7d 05 	call	0xafa	; 0xafa <GetMinutes>
+ 708:	80 93 75 00 	sts	0x0075, r24	; 0x800075 <currentTime+0x1>
+ 70c:	05 c0       	rjmp	.+10     	; 0x718 <getTime+0x50>
+ 70e:	0e 94 81 05 	call	0xb02	; 0xb02 <GetHours>
+ 712:	8f 73       	andi	r24, 0x3F	; 63
+ 714:	80 93 74 00 	sts	0x0074, r24	; 0x800074 <currentTime>
+ 718:	80 91 77 00 	lds	r24, 0x0077	; 0x800077 <marker>
+ 71c:	8f 5f       	subi	r24, 0xFF	; 255
+ 71e:	80 93 77 00 	sts	0x0077, r24	; 0x800077 <marker>
+ 722:	83 30       	cpi	r24, 0x03	; 3
+ 724:	11 f4       	brne	.+4      	; 0x72a <getTime+0x62>
+ 726:	10 92 77 00 	sts	0x0077, r1	; 0x800077 <marker>
+ 72a:	a4 e7       	ldi	r26, 0x74	; 116
+ 72c:	b0 e0       	ldi	r27, 0x00	; 0
+ 72e:	12 96       	adiw	r26, 0x02	; 2
+ 730:	8c 91       	ld	r24, X
+ 732:	12 97       	sbiw	r26, 0x02	; 2
+ 734:	e4 e6       	ldi	r30, 0x64	; 100
+ 736:	f0 e0       	ldi	r31, 0x00	; 0
+ 738:	98 2f       	mov	r25, r24
+ 73a:	9f 70       	andi	r25, 0x0F	; 15
+ 73c:	97 83       	std	Z+7, r25	; 0x07
+ 73e:	80 77       	andi	r24, 0x70	; 112
+ 740:	90 e0       	ldi	r25, 0x00	; 0
+ 742:	95 95       	asr	r25
+ 744:	87 95       	ror	r24
+ 746:	95 95       	asr	r25
+ 748:	87 95       	ror	r24
+ 74a:	95 95       	asr	r25
+ 74c:	87 95       	ror	r24
+ 74e:	95 95       	asr	r25
+ 750:	87 95       	ror	r24
+ 752:	86 83       	std	Z+6, r24	; 0x06
+ 754:	2e e3       	ldi	r18, 0x3E	; 62
+ 756:	25 83       	std	Z+5, r18	; 0x05
+ 758:	11 96       	adiw	r26, 0x01	; 1
+ 75a:	8c 91       	ld	r24, X
+ 75c:	11 97       	sbiw	r26, 0x01	; 1
+ 75e:	98 2f       	mov	r25, r24
+ 760:	9f 70       	andi	r25, 0x0F	; 15
+ 762:	94 83       	std	Z+4, r25	; 0x04
+ 764:	80 77       	andi	r24, 0x70	; 112
+ 766:	90 e0       	ldi	r25, 0x00	; 0
+ 768:	95 95       	asr	r25
+ 76a:	87 95       	ror	r24
+ 76c:	95 95       	asr	r25
+ 76e:	87 95       	ror	r24
+ 770:	95 95       	asr	r25
+ 772:	87 95       	ror	r24
+ 774:	95 95       	asr	r25
+ 776:	87 95       	ror	r24
+ 778:	83 83       	std	Z+3, r24	; 0x03
+ 77a:	22 83       	std	Z+2, r18	; 0x02
+ 77c:	8c 91       	ld	r24, X
+ 77e:	98 2f       	mov	r25, r24
+ 780:	9f 70       	andi	r25, 0x0F	; 15
+ 782:	91 83       	std	Z+1, r25	; 0x01
+ 784:	80 77       	andi	r24, 0x70	; 112
+ 786:	90 e0       	ldi	r25, 0x00	; 0
+ 788:	95 95       	asr	r25
+ 78a:	87 95       	ror	r24
+ 78c:	95 95       	asr	r25
+ 78e:	87 95       	ror	r24
+ 790:	95 95       	asr	r25
+ 792:	87 95       	ror	r24
+ 794:	95 95       	asr	r25
+ 796:	87 95       	ror	r24
+ 798:	80 83       	st	Z, r24
+ 79a:	df 91       	pop	r29
+ 79c:	cf 91       	pop	r28
+ 79e:	08 95       	ret
+
+Disassembly of section .text.getDate:
+
+000004e0 <getDate>:
+ 4e0:	cf 93       	push	r28
+ 4e2:	df 93       	push	r29
+ 4e4:	88 23       	and	r24, r24
+ 4e6:	89 f0       	breq	.+34     	; 0x50a <getDate+0x2a>
+ 4e8:	0e 94 85 05 	call	0xb0a	; 0xb0a <GetMonthDay>
+ 4ec:	cc e6       	ldi	r28, 0x6C	; 108
+ 4ee:	d0 e0       	ldi	r29, 0x00	; 0
+ 4f0:	8b 83       	std	Y+3, r24	; 0x03
+ 4f2:	0e 94 89 05 	call	0xb12	; 0xb12 <GetMonth>
+ 4f6:	8f 71       	andi	r24, 0x1F	; 31
+ 4f8:	8a 83       	std	Y+2, r24	; 0x02
+ 4fa:	0e 94 8d 05 	call	0xb1a	; 0xb1a <GetYear>
+ 4fe:	89 83       	std	Y+1, r24	; 0x01
+ 500:	0e 94 89 05 	call	0xb12	; 0xb12 <GetMonth>
+ 504:	81 70       	andi	r24, 0x01	; 1
+ 506:	88 83       	st	Y, r24
+ 508:	25 c0       	rjmp	.+74     	; 0x554 <getDate+0x74>
+ 50a:	80 91 77 00 	lds	r24, 0x0077	; 0x800077 <marker>
+ 50e:	81 30       	cpi	r24, 0x01	; 1
+ 510:	49 f0       	breq	.+18     	; 0x524 <getDate+0x44>
+ 512:	18 f0       	brcs	.+6      	; 0x51a <getDate+0x3a>
+ 514:	82 30       	cpi	r24, 0x02	; 2
+ 516:	61 f0       	breq	.+24     	; 0x530 <getDate+0x50>
+ 518:	14 c0       	rjmp	.+40     	; 0x542 <getDate+0x62>
+ 51a:	0e 94 85 05 	call	0xb0a	; 0xb0a <GetMonthDay>
+ 51e:	80 93 6f 00 	sts	0x006F, r24	; 0x80006f <currentDate+0x3>
+ 522:	0f c0       	rjmp	.+30     	; 0x542 <getDate+0x62>
+ 524:	0e 94 89 05 	call	0xb12	; 0xb12 <GetMonth>
+ 528:	8f 71       	andi	r24, 0x1F	; 31
+ 52a:	80 93 6e 00 	sts	0x006E, r24	; 0x80006e <currentDate+0x2>
+ 52e:	09 c0       	rjmp	.+18     	; 0x542 <getDate+0x62>
+ 530:	0e 94 8d 05 	call	0xb1a	; 0xb1a <GetYear>
+ 534:	cc e6       	ldi	r28, 0x6C	; 108
+ 536:	d0 e0       	ldi	r29, 0x00	; 0
+ 538:	89 83       	std	Y+1, r24	; 0x01
+ 53a:	0e 94 89 05 	call	0xb12	; 0xb12 <GetMonth>
+ 53e:	81 70       	andi	r24, 0x01	; 1
+ 540:	88 83       	st	Y, r24
+ 542:	80 91 77 00 	lds	r24, 0x0077	; 0x800077 <marker>
+ 546:	8f 5f       	subi	r24, 0xFF	; 255
+ 548:	80 93 77 00 	sts	0x0077, r24	; 0x800077 <marker>
+ 54c:	83 30       	cpi	r24, 0x03	; 3
+ 54e:	11 f4       	brne	.+4      	; 0x554 <getDate+0x74>
+ 550:	10 92 77 00 	sts	0x0077, r1	; 0x800077 <marker>
+ 554:	ec e6       	ldi	r30, 0x6C	; 108
+ 556:	f0 e0       	ldi	r31, 0x00	; 0
+ 558:	83 81       	ldd	r24, Z+3	; 0x03
+ 55a:	28 2f       	mov	r18, r24
+ 55c:	20 73       	andi	r18, 0x30	; 48
+ 55e:	30 e0       	ldi	r19, 0x00	; 0
+ 560:	35 95       	asr	r19
+ 562:	27 95       	ror	r18
+ 564:	35 95       	asr	r19
+ 566:	27 95       	ror	r18
+ 568:	35 95       	asr	r19
+ 56a:	27 95       	ror	r18
+ 56c:	35 95       	asr	r19
+ 56e:	27 95       	ror	r18
+ 570:	a4 e6       	ldi	r26, 0x64	; 100
+ 572:	b0 e0       	ldi	r27, 0x00	; 0
+ 574:	2c 93       	st	X, r18
+ 576:	8f 70       	andi	r24, 0x0F	; 15
+ 578:	86 5f       	subi	r24, 0xF6	; 246
+ 57a:	11 96       	adiw	r26, 0x01	; 1
+ 57c:	8c 93       	st	X, r24
+ 57e:	11 97       	sbiw	r26, 0x01	; 1
+ 580:	82 81       	ldd	r24, Z+2	; 0x02
+ 582:	28 2f       	mov	r18, r24
+ 584:	20 71       	andi	r18, 0x10	; 16
+ 586:	30 e0       	ldi	r19, 0x00	; 0
+ 588:	35 95       	asr	r19
+ 58a:	27 95       	ror	r18
+ 58c:	35 95       	asr	r19
+ 58e:	27 95       	ror	r18
+ 590:	35 95       	asr	r19
+ 592:	27 95       	ror	r18
+ 594:	35 95       	asr	r19
+ 596:	27 95       	ror	r18
+ 598:	12 96       	adiw	r26, 0x02	; 2
+ 59a:	2c 93       	st	X, r18
+ 59c:	12 97       	sbiw	r26, 0x02	; 2
+ 59e:	8f 70       	andi	r24, 0x0F	; 15
+ 5a0:	86 5f       	subi	r24, 0xF6	; 246
+ 5a2:	13 96       	adiw	r26, 0x03	; 3
+ 5a4:	8c 93       	st	X, r24
+ 5a6:	13 97       	sbiw	r26, 0x03	; 3
+ 5a8:	80 81       	ld	r24, Z
+ 5aa:	81 30       	cpi	r24, 0x01	; 1
+ 5ac:	29 f4       	brne	.+10     	; 0x5b8 <getDate+0xd8>
+ 5ae:	fd 01       	movw	r30, r26
+ 5b0:	82 e0       	ldi	r24, 0x02	; 2
+ 5b2:	84 83       	std	Z+4, r24	; 0x04
+ 5b4:	15 82       	std	Z+5, r1	; 0x05
+ 5b6:	06 c0       	rjmp	.+12     	; 0x5c4 <getDate+0xe4>
+ 5b8:	e4 e6       	ldi	r30, 0x64	; 100
+ 5ba:	f0 e0       	ldi	r31, 0x00	; 0
+ 5bc:	81 e0       	ldi	r24, 0x01	; 1
+ 5be:	84 83       	std	Z+4, r24	; 0x04
+ 5c0:	89 e0       	ldi	r24, 0x09	; 9
+ 5c2:	85 83       	std	Z+5, r24	; 0x05
+ 5c4:	80 91 6d 00 	lds	r24, 0x006D	; 0x80006d <currentDate+0x1>
+ 5c8:	98 2f       	mov	r25, r24
+ 5ca:	92 95       	swap	r25
+ 5cc:	9f 70       	andi	r25, 0x0F	; 15
+ 5ce:	e4 e6       	ldi	r30, 0x64	; 100
+ 5d0:	f0 e0       	ldi	r31, 0x00	; 0
+ 5d2:	96 83       	std	Z+6, r25	; 0x06
+ 5d4:	8f 70       	andi	r24, 0x0F	; 15
+ 5d6:	87 83       	std	Z+7, r24	; 0x07
+ 5d8:	df 91       	pop	r29
+ 5da:	cf 91       	pop	r28
+ 5dc:	08 95       	ret
+
+Disassembly of section .text.getDataToDisplay:
+
+00000a52 <getDataToDisplay>:
+	displayString[6] = (currentDate[1] & 0b11110000)>>4;
+	displayString[7] = (currentDate[1] & 0b00001111);
+}
+
+void getDataToDisplay() {
+	switch (mode) {
+ a52:	80 91 79 00 	lds	r24, 0x0079	; 0x800079 <mode>
+ a56:	88 23       	and	r24, r24
+ a58:	19 f0       	breq	.+6      	; 0xa60 <getDataToDisplay+0xe>
+ a5a:	81 30       	cpi	r24, 0x01	; 1
+ a5c:	29 f0       	breq	.+10     	; 0xa68 <getDataToDisplay+0x16>
+ a5e:	08 95       	ret
+		case 0:
+			getTime(false);
+ a60:	80 e0       	ldi	r24, 0x00	; 0
+ a62:	0e 94 64 03 	call	0x6c8	; 0x6c8 <getTime>
+			break;
+ a66:	08 95       	ret
+		case 1:
+			getDate(false);
+ a68:	80 e0       	ldi	r24, 0x00	; 0
+ a6a:	0e 94 70 02 	call	0x4e0	; 0x4e0 <getDate>
+ a6e:	08 95       	ret
+
+Disassembly of section .text.toggleMode:
+
+00000abc <toggleMode>:
+			break;
+	}
+}
+
+void toggleMode() {
+	mode++;
+ abc:	80 91 79 00 	lds	r24, 0x0079	; 0x800079 <mode>
+ ac0:	8f 5f       	subi	r24, 0xFF	; 255
+ ac2:	80 93 79 00 	sts	0x0079, r24	; 0x800079 <mode>
+	if (mode > 1) {
+ ac6:	82 30       	cpi	r24, 0x02	; 2
+ ac8:	10 f0       	brcs	.+4      	; 0xace <toggleMode+0x12>
+		mode = 0;
+ aca:	10 92 79 00 	sts	0x0079, r1	; 0x800079 <mode>
+ ace:	08 95       	ret
+
+Disassembly of section .text.main:
+
+000007a0 <main>:
+	ADCSRA |=(1<<ADSC);
+	char r = ADC / 10;
+	ADCSRA &= ~(1<<ADSC);
+	if (r > 100) r = 100;
+	return r;
+}
+ 7a0:	84 ef       	ldi	r24, 0xF4	; 244
+ 7a2:	91 e0       	ldi	r25, 0x01	; 1
+ 7a4:	0e 94 1a 05 	call	0xa34	; 0xa34 <my_delay_ms>
+ 7a8:	0e 94 75 05 	call	0xaea	; 0xaea <Initialise_TWI_Master>
+ 7ac:	81 e0       	ldi	r24, 0x01	; 1
+ 7ae:	0e 94 64 03 	call	0x6c8	; 0x6c8 <getTime>
+ 7b2:	81 e0       	ldi	r24, 0x01	; 1
+ 7b4:	0e 94 70 02 	call	0x4e0	; 0x4e0 <getDate>
+ 7b8:	81 b3       	in	r24, 0x11	; 17
+ 7ba:	80 71       	andi	r24, 0x10	; 16
+ 7bc:	81 bb       	out	0x11, r24	; 17
+ 7be:	82 b3       	in	r24, 0x12	; 18
+ 7c0:	80 61       	ori	r24, 0x10	; 16
+ 7c2:	82 bb       	out	0x12, r24	; 18
+ 7c4:	81 b3       	in	r24, 0x11	; 17
+ 7c6:	80 64       	ori	r24, 0x40	; 64
+ 7c8:	81 bb       	out	0x11, r24	; 17
+ 7ca:	85 b3       	in	r24, 0x15	; 21
+ 7cc:	87 7f       	andi	r24, 0xF7	; 247
+ 7ce:	85 bb       	out	0x15, r24	; 21
+ 7d0:	82 b3       	in	r24, 0x12	; 18
+ 7d2:	80 64       	ori	r24, 0x40	; 64
+ 7d4:	82 bb       	out	0x12, r24	; 18
+ 7d6:	80 91 7a 00 	lds	r24, 0x007A	; 0x80007a <brightness>
+ 7da:	90 e0       	ldi	r25, 0x00	; 0
+ 7dc:	0e 94 99 04 	call	0x932	; 0x932 <dimmer>
+ 7e0:	84 99       	sbic	0x10, 4	; 16
+ 7e2:	06 c0       	rjmp	.+12     	; 0x7f0 <main+0x50>
+ 7e4:	80 91 78 00 	lds	r24, 0x0078	; 0x800078 <buttonCounter>
+ 7e8:	8f 5f       	subi	r24, 0xFF	; 255
+ 7ea:	80 93 78 00 	sts	0x0078, r24	; 0x800078 <buttonCounter>
+ 7ee:	08 c0       	rjmp	.+16     	; 0x800 <main+0x60>
+ 7f0:	80 91 78 00 	lds	r24, 0x0078	; 0x800078 <buttonCounter>
+ 7f4:	8b 30       	cpi	r24, 0x0B	; 11
+ 7f6:	20 f0       	brcs	.+8      	; 0x800 <main+0x60>
+ 7f8:	0e 94 5e 05 	call	0xabc	; 0xabc <toggleMode>
+ 7fc:	10 92 78 00 	sts	0x0078, r1	; 0x800078 <buttonCounter>
+ 800:	90 91 7b 00 	lds	r25, 0x007B	; 0x80007b <mainCounter>
+ 804:	8b ea       	ldi	r24, 0xAB	; 171
+ 806:	98 9f       	mul	r25, r24
+ 808:	81 2d       	mov	r24, r1
+ 80a:	11 24       	eor	r1, r1
+ 80c:	86 95       	lsr	r24
+ 80e:	28 2f       	mov	r18, r24
+ 810:	22 0f       	add	r18, r18
+ 812:	82 0f       	add	r24, r18
+ 814:	98 13       	cpse	r25, r24
+ 816:	02 c0       	rjmp	.+4      	; 0x81c <main+0x7c>
+ 818:	0e 94 29 05 	call	0xa52	; 0xa52 <getDataToDisplay>
+ 81c:	84 e6       	ldi	r24, 0x64	; 100
+ 81e:	90 e0       	ldi	r25, 0x00	; 0
+ 820:	0e 94 d1 00 	call	0x1a2	; 0x1a2 <displayChars>
+ 824:	0e 94 47 05 	call	0xa8e	; 0xa8e <displayLed>
+ 828:	80 91 7b 00 	lds	r24, 0x007B	; 0x80007b <mainCounter>
+ 82c:	8f 5f       	subi	r24, 0xFF	; 255
+ 82e:	80 93 7b 00 	sts	0x007B, r24	; 0x80007b <mainCounter>
+ 832:	8b 3f       	cpi	r24, 0xFB	; 251
+ 834:	81 f6       	brne	.-96     	; 0x7d6 <main+0x36>
+ 836:	10 92 7b 00 	sts	0x007B, r1	; 0x80007b <mainCounter>
+ 83a:	cd cf       	rjmp	.-102    	; 0x7d6 <main+0x36>
+
+Disassembly of section .text.Initialise_TWI_Master:
+
+00000aea <Initialise_TWI_Master>:
+	return RTChours;
+}
+
+unsigned char GetWeekDay(void) {
+	return RTCRead(WEEKDAYS_REGISTER_ADDR);
+}
+ aea:	0e 94 68 05 	call	0xad0	; 0xad0 <TWI_Master_Initialise>
+ aee:	78 94       	sei
+ af0:	08 95       	ret
+
+Disassembly of section .text.RTCRead:
+
+0000089a <RTCRead>:
+ 89a:	cf 93       	push	r28
+ 89c:	df 93       	push	r29
+ 89e:	00 d0       	rcall	.+0      	; 0x8a0 <RTCRead+0x6>
+ 8a0:	00 d0       	rcall	.+0      	; 0x8a2 <RTCRead+0x8>
+ 8a2:	cd b7       	in	r28, 0x3d	; 61
+ 8a4:	de b7       	in	r29, 0x3e	; 62
+ 8a6:	90 ed       	ldi	r25, 0xD0	; 208
+ 8a8:	99 83       	std	Y+1, r25	; 0x01
+ 8aa:	8a 83       	std	Y+2, r24	; 0x02
+ 8ac:	62 e0       	ldi	r22, 0x02	; 2
+ 8ae:	ce 01       	movw	r24, r28
+ 8b0:	01 96       	adiw	r24, 0x01	; 1
+ 8b2:	0e 94 1e 04 	call	0x83c	; 0x83c <TWI_Start_Transceiver_With_Data>
+ 8b6:	81 11       	cpse	r24, r1
+ 8b8:	0f c0       	rjmp	.+30     	; 0x8d8 <RTCRead+0x3e>
+ 8ba:	81 ed       	ldi	r24, 0xD1	; 209
+ 8bc:	89 83       	std	Y+1, r24	; 0x01
+ 8be:	62 e0       	ldi	r22, 0x02	; 2
+ 8c0:	ce 01       	movw	r24, r28
+ 8c2:	01 96       	adiw	r24, 0x01	; 1
+ 8c4:	0e 94 1e 04 	call	0x83c	; 0x83c <TWI_Start_Transceiver_With_Data>
+ 8c8:	81 11       	cpse	r24, r1
+ 8ca:	06 c0       	rjmp	.+12     	; 0x8d8 <RTCRead+0x3e>
+ 8cc:	62 e0       	ldi	r22, 0x02	; 2
+ 8ce:	ce 01       	movw	r24, r28
+ 8d0:	01 96       	adiw	r24, 0x01	; 1
+ 8d2:	0e 94 73 04 	call	0x8e6	; 0x8e6 <TWI_Get_Data_From_Transceiver>
+ 8d6:	8a 81       	ldd	r24, Y+2	; 0x02
+ 8d8:	0f 90       	pop	r0
+ 8da:	0f 90       	pop	r0
+ 8dc:	0f 90       	pop	r0
+ 8de:	0f 90       	pop	r0
+ 8e0:	df 91       	pop	r29
+ 8e2:	cf 91       	pop	r28
+ 8e4:	08 95       	ret
+
+Disassembly of section .text.GetSeconds:
+
+00000af2 <GetSeconds>:
+ af2:	80 e0       	ldi	r24, 0x00	; 0
+ af4:	0e 94 4d 04 	call	0x89a	; 0x89a <RTCRead>
+ af8:	08 95       	ret
+
+Disassembly of section .text.GetMinutes:
+
+00000afa <GetMinutes>:
+ afa:	81 e0       	ldi	r24, 0x01	; 1
+ afc:	0e 94 4d 04 	call	0x89a	; 0x89a <RTCRead>
+ b00:	08 95       	ret
+
+Disassembly of section .text.GetHours:
+
+00000b02 <GetHours>:
+ b02:	82 e0       	ldi	r24, 0x02	; 2
+ b04:	0e 94 4d 04 	call	0x89a	; 0x89a <RTCRead>
+ b08:	08 95       	ret
+
+Disassembly of section .text.GetMonthDay:
+
+00000b0a <GetMonthDay>:
+
+unsigned char GetMonthDay(void) {
+	return RTCRead(MONTHDAYS_REGISTER_ADDR);
+ b0a:	84 e0       	ldi	r24, 0x04	; 4
+ b0c:	0e 94 4d 04 	call	0x89a	; 0x89a <RTCRead>
+}
+ b10:	08 95       	ret
+
+Disassembly of section .text.GetMonth:
+
+00000b12 <GetMonth>:
+
+unsigned char GetMonth(void) {
+	return RTCRead(MONTHS_REGISTER_ADDR);
+ b12:	85 e0       	ldi	r24, 0x05	; 5
+ b14:	0e 94 4d 04 	call	0x89a	; 0x89a <RTCRead>
+}
+ b18:	08 95       	ret
+
+Disassembly of section .text.GetYear:
+
+00000b1a <GetYear>:
+
+unsigned char GetYear(void) {
+	return RTCRead(YEARS_REGISTER_ADDR);
+ b1a:	86 e0       	ldi	r24, 0x06	; 6
+ b1c:	0e 94 4d 04 	call	0x89a	; 0x89a <RTCRead>
+}
+ b20:	08 95       	ret
+
+Disassembly of section .text.TWI_Master_Initialise:
+
+00000ad0 <TWI_Master_Initialise>:
+Call this function to set up the TWI master to its initial standby state.
+Remember to enable interrupts from the main application after initializing the TWI.
+****************************************************************************/
+void TWI_Master_Initialise(void)
+{
+  TWBR = TWI_TWBR;                                  // Set bit rate register (Baud rate). Defined in header file.Driver presumes prescaler to be 00.                                
+ ad0:	8c e0       	ldi	r24, 0x0C	; 12
+ ad2:	80 b9       	out	0x00, r24	; 0
+  TWDR = 0xFF;                                      // Default content = SDA released.
+ ad4:	8f ef       	ldi	r24, 0xFF	; 255
+ ad6:	83 b9       	out	0x03, r24	; 3
+  TWCR = (1<<TWEN)|                                 // Enable TWI-interface and release TWI pins.
+ ad8:	84 e0       	ldi	r24, 0x04	; 4
+ ada:	86 bf       	out	0x36, r24	; 54
+ adc:	08 95       	ret
+
+Disassembly of section .text.TWI_Transceiver_Busy:
+
+00000b22 <TWI_Transceiver_Busy>:
+/****************************************************************************
+Call this function to test if the TWI_ISR is busy transmitting.
+****************************************************************************/
+unsigned char TWI_Transceiver_Busy( void )
+{
+  return ( TWCR & (1<<TWIE) );                  // IF TWI Interrupt is enabled then the Transceiver is busy
+ b22:	86 b7       	in	r24, 0x36	; 54
+}
+ b24:	81 70       	andi	r24, 0x01	; 1
+ b26:	08 95       	ret
+
+Disassembly of section .text.WaitForTransceiverNotBusy:
+
+000009ba <WaitForTransceiverNotBusy>:
+
+unsigned char WaitForTransceiverNotBusy(void) {
+ 9ba:	cf 93       	push	r28
+	unsigned char timeout = 0;
+ 9bc:	c0 e0       	ldi	r28, 0x00	; 0
+	while (TWI_Transceiver_Busy() && (timeout < 255))
+ 9be:	05 c0       	rjmp	.+10     	; 0x9ca <WaitForTransceiverNotBusy+0x10>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 9c0:	85 e8       	ldi	r24, 0x85	; 133
+ 9c2:	8a 95       	dec	r24
+ 9c4:	f1 f7       	brne	.-4      	; 0x9c2 <WaitForTransceiverNotBusy+0x8>
+ 9c6:	00 00       	nop
+	{
+		_delay_us(100);
+		timeout++;
+ 9c8:	cf 5f       	subi	r28, 0xFF	; 255
+  return ( TWCR & (1<<TWIE) );                  // IF TWI Interrupt is enabled then the Transceiver is busy
+}
+
+unsigned char WaitForTransceiverNotBusy(void) {
+	unsigned char timeout = 0;
+	while (TWI_Transceiver_Busy() && (timeout < 255))
+ 9ca:	0e 94 91 05 	call	0xb22	; 0xb22 <TWI_Transceiver_Busy>
+ 9ce:	88 23       	and	r24, r24
+ 9d0:	11 f0       	breq	.+4      	; 0x9d6 <WaitForTransceiverNotBusy+0x1c>
+ 9d2:	cf 3f       	cpi	r28, 0xFF	; 255
+ 9d4:	a9 f7       	brne	.-22     	; 0x9c0 <WaitForTransceiverNotBusy+0x6>
+	{
+		_delay_us(100);
+		timeout++;
+	}
+	if (timeout == 255) return 1;
+ 9d6:	cf 3f       	cpi	r28, 0xFF	; 255
+ 9d8:	11 f4       	brne	.+4      	; 0x9de <WaitForTransceiverNotBusy+0x24>
+ 9da:	81 e0       	ldi	r24, 0x01	; 1
+ 9dc:	01 c0       	rjmp	.+2      	; 0x9e0 <WaitForTransceiverNotBusy+0x26>
+	else return 0;
+ 9de:	80 e0       	ldi	r24, 0x00	; 0
+}
+ 9e0:	cf 91       	pop	r28
+ 9e2:	08 95       	ret
+
+Disassembly of section .text.TWI_Start_Transceiver_With_Data:
+
+0000083c <TWI_Start_Transceiver_With_Data>:
+  TWCR = (1<<TWEN)|                             // TWI Interface enabled.
+         (1<<TWIE)|(1<<TWINT)|                  // Enable TWI Interrupt and clear the flag.
+         (0<<TWEA)|(1<<TWSTA)|(0<<TWSTO)|       // Initiate a START condition.
+         (0<<TWWC);                             //
+	return 0;
+}
+ 83c:	1f 93       	push	r17
+ 83e:	cf 93       	push	r28
+ 840:	df 93       	push	r29
+ 842:	ec 01       	movw	r28, r24
+ 844:	16 2f       	mov	r17, r22
+ 846:	0e 94 dd 04 	call	0x9ba	; 0x9ba <WaitForTransceiverNotBusy>
+ 84a:	81 30       	cpi	r24, 0x01	; 1
+ 84c:	09 f1       	breq	.+66     	; 0x890 <TWI_Start_Transceiver_With_Data+0x54>
+ 84e:	10 93 7f 00 	sts	0x007F, r17	; 0x80007f <TWI_msgSize>
+ 852:	88 81       	ld	r24, Y
+ 854:	80 93 70 00 	sts	0x0070, r24	; 0x800070 <TWI_buf>
+ 858:	88 81       	ld	r24, Y
+ 85a:	80 ff       	sbrs	r24, 0
+ 85c:	0d c0       	rjmp	.+26     	; 0x878 <TWI_Start_Transceiver_With_Data+0x3c>
+ 85e:	0f c0       	rjmp	.+30     	; 0x87e <TWI_Start_Transceiver_With_Data+0x42>
+ 860:	82 2f       	mov	r24, r18
+ 862:	90 e0       	ldi	r25, 0x00	; 0
+ 864:	fe 01       	movw	r30, r28
+ 866:	e8 0f       	add	r30, r24
+ 868:	f9 1f       	adc	r31, r25
+ 86a:	30 81       	ld	r19, Z
+ 86c:	fc 01       	movw	r30, r24
+ 86e:	e0 59       	subi	r30, 0x90	; 144
+ 870:	ff 4f       	sbci	r31, 0xFF	; 255
+ 872:	30 83       	st	Z, r19
+ 874:	2f 5f       	subi	r18, 0xFF	; 255
+ 876:	01 c0       	rjmp	.+2      	; 0x87a <TWI_Start_Transceiver_With_Data+0x3e>
+ 878:	21 e0       	ldi	r18, 0x01	; 1
+ 87a:	21 17       	cp	r18, r17
+ 87c:	88 f3       	brcs	.-30     	; 0x860 <TWI_Start_Transceiver_With_Data+0x24>
+ 87e:	10 92 7d 00 	sts	0x007D, r1	; 0x80007d <TWI_statusReg>
+ 882:	88 ef       	ldi	r24, 0xF8	; 248
+ 884:	80 93 7e 00 	sts	0x007E, r24	; 0x80007e <TWI_state>
+ 888:	85 ea       	ldi	r24, 0xA5	; 165
+ 88a:	86 bf       	out	0x36, r24	; 54
+ 88c:	80 e0       	ldi	r24, 0x00	; 0
+ 88e:	01 c0       	rjmp	.+2      	; 0x892 <TWI_Start_Transceiver_With_Data+0x56>
+ 890:	8f ef       	ldi	r24, 0xFF	; 255
+ 892:	df 91       	pop	r29
+ 894:	cf 91       	pop	r28
+ 896:	1f 91       	pop	r17
+ 898:	08 95       	ret
+
+Disassembly of section .text.TWI_Get_Data_From_Transceiver:
+
+000008e6 <TWI_Get_Data_From_Transceiver>:
+requested (including the address field) in the function call. The function will hold execution (loop)
+until the TWI_ISR has completed with the previous operation, before reading out the data and returning.
+If there was an error in the previous transmission the function will return the TWI error code.
+****************************************************************************/
+unsigned char TWI_Get_Data_From_Transceiver( unsigned char *msg, unsigned char msgSize )
+{
+ 8e6:	0f 93       	push	r16
+ 8e8:	1f 93       	push	r17
+ 8ea:	cf 93       	push	r28
+ 8ec:	8c 01       	movw	r16, r24
+ 8ee:	c6 2f       	mov	r28, r22
+  unsigned char i;
+
+  if (WaitForTransceiverNotBusy() == 1) return 255;             // Wait until TWI is ready for next transmission.
+ 8f0:	0e 94 dd 04 	call	0x9ba	; 0x9ba <WaitForTransceiverNotBusy>
+ 8f4:	81 30       	cpi	r24, 0x01	; 1
+ 8f6:	c1 f0       	breq	.+48     	; 0x928 <TWI_Get_Data_From_Transceiver+0x42>
+
+  //WaitForTransceiverNotBusy();
+  if( TWI_statusReg.lastTransOK )               // Last transmission competed successfully.              
+ 8f8:	80 91 7d 00 	lds	r24, 0x007D	; 0x80007d <TWI_statusReg>
+ 8fc:	80 fd       	sbrc	r24, 0
+ 8fe:	0d c0       	rjmp	.+26     	; 0x91a <TWI_Get_Data_From_Transceiver+0x34>
+ 900:	0f c0       	rjmp	.+30     	; 0x920 <TWI_Get_Data_From_Transceiver+0x3a>
+  {                                             
+    for ( i=0; i<msgSize; i++ )                 // Copy data from Transceiver buffer.
+    {
+      msg[ i ] = TWI_buf[ i ];
+ 902:	82 2f       	mov	r24, r18
+ 904:	90 e0       	ldi	r25, 0x00	; 0
+ 906:	f8 01       	movw	r30, r16
+ 908:	e8 0f       	add	r30, r24
+ 90a:	f9 1f       	adc	r31, r25
+ 90c:	dc 01       	movw	r26, r24
+ 90e:	a0 59       	subi	r26, 0x90	; 144
+ 910:	bf 4f       	sbci	r27, 0xFF	; 255
+ 912:	8c 91       	ld	r24, X
+ 914:	80 83       	st	Z, r24
+  if (WaitForTransceiverNotBusy() == 1) return 255;             // Wait until TWI is ready for next transmission.
+
+  //WaitForTransceiverNotBusy();
+  if( TWI_statusReg.lastTransOK )               // Last transmission competed successfully.              
+  {                                             
+    for ( i=0; i<msgSize; i++ )                 // Copy data from Transceiver buffer.
+ 916:	2f 5f       	subi	r18, 0xFF	; 255
+ 918:	01 c0       	rjmp	.+2      	; 0x91c <TWI_Get_Data_From_Transceiver+0x36>
+ 91a:	20 e0       	ldi	r18, 0x00	; 0
+ 91c:	2c 17       	cp	r18, r28
+ 91e:	88 f3       	brcs	.-30     	; 0x902 <TWI_Get_Data_From_Transceiver+0x1c>
+    {
+      msg[ i ] = TWI_buf[ i ];
+    }
+  }
+  return( TWI_statusReg.lastTransOK );                                   
+ 920:	80 91 7d 00 	lds	r24, 0x007D	; 0x80007d <TWI_statusReg>
+ 924:	81 70       	andi	r24, 0x01	; 1
+ 926:	01 c0       	rjmp	.+2      	; 0x92a <TWI_Get_Data_From_Transceiver+0x44>
+****************************************************************************/
+unsigned char TWI_Get_Data_From_Transceiver( unsigned char *msg, unsigned char msgSize )
+{
+  unsigned char i;
+
+  if (WaitForTransceiverNotBusy() == 1) return 255;             // Wait until TWI is ready for next transmission.
+ 928:	8f ef       	ldi	r24, 0xFF	; 255
+    {
+      msg[ i ] = TWI_buf[ i ];
+    }
+  }
+  return( TWI_statusReg.lastTransOK );                                   
+}
+ 92a:	cf 91       	pop	r28
+ 92c:	1f 91       	pop	r17
+ 92e:	0f 91       	pop	r16
+ 930:	08 95       	ret
+
+Disassembly of section .text.__vector_17:
+
+000005de <__vector_17>:
+  TWCR = (1<<TWEN)|                             // TWI Interface enabled.
+         (1<<TWIE)|(1<<TWINT)|                  // Enable TWI Interrupt and clear the flag.
+         (0<<TWEA)|(1<<TWSTA)|(0<<TWSTO)|       // Initiate a START condition.
+         (0<<TWWC);                             //
+	return 0;
+}
+ 5de:	1f 92       	push	r1
+ 5e0:	0f 92       	push	r0
+ 5e2:	0f b6       	in	r0, 0x3f	; 63
+ 5e4:	0f 92       	push	r0
+ 5e6:	11 24       	eor	r1, r1
+ 5e8:	2f 93       	push	r18
+ 5ea:	3f 93       	push	r19
+ 5ec:	8f 93       	push	r24
+ 5ee:	9f 93       	push	r25
+ 5f0:	af 93       	push	r26
+ 5f2:	bf 93       	push	r27
+ 5f4:	ef 93       	push	r30
+ 5f6:	ff 93       	push	r31
+ 5f8:	e1 b1       	in	r30, 0x01	; 1
+ 5fa:	8e 2f       	mov	r24, r30
+ 5fc:	90 e0       	ldi	r25, 0x00	; 0
+ 5fe:	fc 01       	movw	r30, r24
+ 600:	38 97       	sbiw	r30, 0x08	; 8
+ 602:	e1 35       	cpi	r30, 0x51	; 81
+ 604:	f1 05       	cpc	r31, r1
+ 606:	08 f0       	brcs	.+2      	; 0x60a <__vector_17+0x2c>
+ 608:	4d c0       	rjmp	.+154    	; 0x6a4 <__vector_17+0xc6>
+ 60a:	eb 5c       	subi	r30, 0xCB	; 203
+ 60c:	ff 4f       	sbci	r31, 0xFF	; 255
+ 60e:	0c 94 6f 05 	jmp	0xade	; 0xade <__tablejump2__>
+ 612:	10 92 7c 00 	sts	0x007C, r1	; 0x80007c <TWI_bufPtr.2011>
+ 616:	e0 91 7c 00 	lds	r30, 0x007C	; 0x80007c <TWI_bufPtr.2011>
+ 61a:	80 91 7f 00 	lds	r24, 0x007F	; 0x80007f <TWI_msgSize>
+ 61e:	e8 17       	cp	r30, r24
+ 620:	60 f4       	brcc	.+24     	; 0x63a <__vector_17+0x5c>
+ 622:	81 e0       	ldi	r24, 0x01	; 1
+ 624:	8e 0f       	add	r24, r30
+ 626:	80 93 7c 00 	sts	0x007C, r24	; 0x80007c <TWI_bufPtr.2011>
+ 62a:	f0 e0       	ldi	r31, 0x00	; 0
+ 62c:	e0 59       	subi	r30, 0x90	; 144
+ 62e:	ff 4f       	sbci	r31, 0xFF	; 255
+ 630:	80 81       	ld	r24, Z
+ 632:	83 b9       	out	0x03, r24	; 3
+ 634:	85 e8       	ldi	r24, 0x85	; 133
+ 636:	86 bf       	out	0x36, r24	; 54
+ 638:	3a c0       	rjmp	.+116    	; 0x6ae <__vector_17+0xd0>
+ 63a:	80 91 7d 00 	lds	r24, 0x007D	; 0x80007d <TWI_statusReg>
+ 63e:	81 60       	ori	r24, 0x01	; 1
+ 640:	80 93 7d 00 	sts	0x007D, r24	; 0x80007d <TWI_statusReg>
+ 644:	84 e9       	ldi	r24, 0x94	; 148
+ 646:	86 bf       	out	0x36, r24	; 54
+ 648:	32 c0       	rjmp	.+100    	; 0x6ae <__vector_17+0xd0>
+ 64a:	e0 91 7c 00 	lds	r30, 0x007C	; 0x80007c <TWI_bufPtr.2011>
+ 64e:	81 e0       	ldi	r24, 0x01	; 1
+ 650:	8e 0f       	add	r24, r30
+ 652:	80 93 7c 00 	sts	0x007C, r24	; 0x80007c <TWI_bufPtr.2011>
+ 656:	f0 e0       	ldi	r31, 0x00	; 0
+ 658:	83 b1       	in	r24, 0x03	; 3
+ 65a:	e0 59       	subi	r30, 0x90	; 144
+ 65c:	ff 4f       	sbci	r31, 0xFF	; 255
+ 65e:	80 83       	st	Z, r24
+ 660:	20 91 7c 00 	lds	r18, 0x007C	; 0x80007c <TWI_bufPtr.2011>
+ 664:	30 e0       	ldi	r19, 0x00	; 0
+ 666:	80 91 7f 00 	lds	r24, 0x007F	; 0x80007f <TWI_msgSize>
+ 66a:	90 e0       	ldi	r25, 0x00	; 0
+ 66c:	01 97       	sbiw	r24, 0x01	; 1
+ 66e:	28 17       	cp	r18, r24
+ 670:	39 07       	cpc	r19, r25
+ 672:	1c f4       	brge	.+6      	; 0x67a <__vector_17+0x9c>
+ 674:	85 ec       	ldi	r24, 0xC5	; 197
+ 676:	86 bf       	out	0x36, r24	; 54
+ 678:	1a c0       	rjmp	.+52     	; 0x6ae <__vector_17+0xd0>
+ 67a:	85 e8       	ldi	r24, 0x85	; 133
+ 67c:	86 bf       	out	0x36, r24	; 54
+ 67e:	17 c0       	rjmp	.+46     	; 0x6ae <__vector_17+0xd0>
+ 680:	e0 91 7c 00 	lds	r30, 0x007C	; 0x80007c <TWI_bufPtr.2011>
+ 684:	f0 e0       	ldi	r31, 0x00	; 0
+ 686:	83 b1       	in	r24, 0x03	; 3
+ 688:	e0 59       	subi	r30, 0x90	; 144
+ 68a:	ff 4f       	sbci	r31, 0xFF	; 255
+ 68c:	80 83       	st	Z, r24
+ 68e:	80 91 7d 00 	lds	r24, 0x007D	; 0x80007d <TWI_statusReg>
+ 692:	81 60       	ori	r24, 0x01	; 1
+ 694:	80 93 7d 00 	sts	0x007D, r24	; 0x80007d <TWI_statusReg>
+ 698:	84 e9       	ldi	r24, 0x94	; 148
+ 69a:	86 bf       	out	0x36, r24	; 54
+ 69c:	08 c0       	rjmp	.+16     	; 0x6ae <__vector_17+0xd0>
+ 69e:	85 ea       	ldi	r24, 0xA5	; 165
+ 6a0:	86 bf       	out	0x36, r24	; 54
+ 6a2:	05 c0       	rjmp	.+10     	; 0x6ae <__vector_17+0xd0>
+ 6a4:	81 b1       	in	r24, 0x01	; 1
+ 6a6:	80 93 7e 00 	sts	0x007E, r24	; 0x80007e <TWI_state>
+ 6aa:	84 e0       	ldi	r24, 0x04	; 4
+ 6ac:	86 bf       	out	0x36, r24	; 54
+ 6ae:	ff 91       	pop	r31
+ 6b0:	ef 91       	pop	r30
+ 6b2:	bf 91       	pop	r27
+ 6b4:	af 91       	pop	r26
+ 6b6:	9f 91       	pop	r25
+ 6b8:	8f 91       	pop	r24
+ 6ba:	3f 91       	pop	r19
+ 6bc:	2f 91       	pop	r18
+ 6be:	0f 90       	pop	r0
+ 6c0:	0f be       	out	0x3f, r0	; 63
+ 6c2:	0f 90       	pop	r0
+ 6c4:	1f 90       	pop	r1
+ 6c6:	18 95       	reti
+
+Disassembly of section .text.libgcc.div:
+
+000009e4 <__divmodhi4>:
+ 9e4:	97 fb       	bst	r25, 7
+ 9e6:	07 2e       	mov	r0, r23
+ 9e8:	16 f4       	brtc	.+4      	; 0x9ee <__divmodhi4+0xa>
+ 9ea:	00 94       	com	r0
+ 9ec:	07 d0       	rcall	.+14     	; 0x9fc <__divmodhi4_neg1>
+ 9ee:	77 fd       	sbrc	r23, 7
+ 9f0:	09 d0       	rcall	.+18     	; 0xa04 <__divmodhi4_neg2>
+ 9f2:	0e 94 06 05 	call	0xa0c	; 0xa0c <__udivmodhi4>
+ 9f6:	07 fc       	sbrc	r0, 7
+ 9f8:	05 d0       	rcall	.+10     	; 0xa04 <__divmodhi4_neg2>
+ 9fa:	3e f4       	brtc	.+14     	; 0xa0a <__divmodhi4_exit>
+
+000009fc <__divmodhi4_neg1>:
+ 9fc:	90 95       	com	r25
+ 9fe:	81 95       	neg	r24
+ a00:	9f 4f       	sbci	r25, 0xFF	; 255
+ a02:	08 95       	ret
+
+00000a04 <__divmodhi4_neg2>:
+ a04:	70 95       	com	r23
+ a06:	61 95       	neg	r22
+ a08:	7f 4f       	sbci	r23, 0xFF	; 255
+
+00000a0a <__divmodhi4_exit>:
+ a0a:	08 95       	ret
+
+Disassembly of section .text.libgcc:
+
+00000ade <__tablejump2__>:
+ ade:	ee 0f       	add	r30, r30
+ ae0:	ff 1f       	adc	r31, r31
+ ae2:	05 90       	lpm	r0, Z+
+ ae4:	f4 91       	lpm	r31, Z
+ ae6:	e0 2d       	mov	r30, r0
+ ae8:	09 94       	ijmp
+
+Disassembly of section .text.libgcc.mul:
+
+00000a70 <__umulhisi3>:
+ a70:	a2 9f       	mul	r26, r18
+ a72:	b0 01       	movw	r22, r0
+ a74:	b3 9f       	mul	r27, r19
+ a76:	c0 01       	movw	r24, r0
+ a78:	a3 9f       	mul	r26, r19
+ a7a:	70 0d       	add	r23, r0
+ a7c:	81 1d       	adc	r24, r1
+ a7e:	11 24       	eor	r1, r1
+ a80:	91 1d       	adc	r25, r1
+ a82:	b2 9f       	mul	r27, r18
+ a84:	70 0d       	add	r23, r0
+ a86:	81 1d       	adc	r24, r1
+ a88:	11 24       	eor	r1, r1
+ a8a:	91 1d       	adc	r25, r1
+ a8c:	08 95       	ret
+
+Disassembly of section .text.libgcc.div:
+
+00000a0c <__udivmodhi4>:
+ a0c:	aa 1b       	sub	r26, r26
+ a0e:	bb 1b       	sub	r27, r27
+ a10:	51 e1       	ldi	r21, 0x11	; 17
+ a12:	07 c0       	rjmp	.+14     	; 0xa22 <__udivmodhi4_ep>
+
+00000a14 <__udivmodhi4_loop>:
+ a14:	aa 1f       	adc	r26, r26
+ a16:	bb 1f       	adc	r27, r27
+ a18:	a6 17       	cp	r26, r22
+ a1a:	b7 07       	cpc	r27, r23
+ a1c:	10 f0       	brcs	.+4      	; 0xa22 <__udivmodhi4_ep>
+ a1e:	a6 1b       	sub	r26, r22
+ a20:	b7 0b       	sbc	r27, r23
+
+00000a22 <__udivmodhi4_ep>:
+ a22:	88 1f       	adc	r24, r24
+ a24:	99 1f       	adc	r25, r25
+ a26:	5a 95       	dec	r21
+ a28:	a9 f7       	brne	.-22     	; 0xa14 <__udivmodhi4_loop>
+ a2a:	80 95       	com	r24
+ a2c:	90 95       	com	r25
+ a2e:	bc 01       	movw	r22, r24
+ a30:	cd 01       	movw	r24, r26
+ a32:	08 95       	ret
+
+Disassembly of section .text.__dummy_fini:
+
+00000b30 <_fini>:
+ b30:	08 95       	ret
+
+Disassembly of section .text.__dummy_funcs_on_exit:
+
+00000b32 <__funcs_on_exit>:
+ b32:	08 95       	ret
+
+Disassembly of section .text.__dummy_simulator_exit:
+
+00000b34 <__simulator_exit>:
+ b34:	08 95       	ret
+
+Disassembly of section .text.exit:
+
+00000aa6 <exit>:
+ aa6:	ec 01       	movw	r28, r24
+ aa8:	0e 94 99 05 	call	0xb32	; 0xb32 <__funcs_on_exit>
+ aac:	0e 94 98 05 	call	0xb30	; 0xb30 <_fini>
+ ab0:	ce 01       	movw	r24, r28
+ ab2:	0e 94 9a 05 	call	0xb34	; 0xb34 <__simulator_exit>
+ ab6:	ce 01       	movw	r24, r28
+ ab8:	0e 94 96 05 	call	0xb2c	; 0xb2c <_Exit>
+
+Disassembly of section .text._Exit:
+
+00000b2c <_Exit>:
+ b2c:	0e 94 bd 00 	call	0x17a	; 0x17a <_exit>
