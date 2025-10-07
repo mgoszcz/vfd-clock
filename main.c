@@ -29,8 +29,14 @@ unsigned char almButtonCounter = 0;
 bool blinker = true;
 bool alarmActive = false;
 bool editMode = false;
+bool blockSetButtonCounter = false;
 char marker = 0;
 char editIndex = 0;
+
+const int monthDaysCount[12] = {
+	31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
+};
+const int century[2] = {1900, 2000};
 
 char getBrigthness() {
 	ADCSRA |=(1<<ADSC);
@@ -38,6 +44,28 @@ char getBrigthness() {
 	ADCSRA &= ~(1<<ADSC);
 	if (r > 100) r = 100;
 	return r;
+}
+
+unsigned char bcdToDec(unsigned char bcd) {
+	return (((bcd & 0xf0) >> 4) * 10) + (bcd &0xf);
+}
+
+unsigned char decToBcd(unsigned char dec) {
+	char decimals = dec/10;
+	char units = dec%10;
+	return (decimals<<4) + units;
+}
+
+unsigned char incrementBcd(unsigned char value) {
+	return decToBcd(bcdToDec(value) + 1);
+}
+
+bool isLeapYear() {
+	int year = century[currentDate[0]] + bcdToDec(currentDate[1]);
+	if (year%4 != 0) return false;
+	if (year%100 != 0) return true;
+	if (year%400 != 0) return false;
+	return true;
 }
 
 void my_delay_ms(int miliseconds) {
@@ -77,6 +105,22 @@ void ledDisplayAction() {
 		PORTC &= ~(1 << PC3);
 		return;
 	}
+}
+
+void storeDateInDisplayString() {
+	displayString[0] = (currentDate[3] & 0b00110000)>>4;
+	displayString[1] = (currentDate[3] & 0b00001111) + 10;
+	displayString[2] = (currentDate[2] & 0b00010000)>>4;
+	displayString[3] = (currentDate[2] & 0b00001111) + 10;
+	if (currentDate[0] == 1) {
+		displayString[4] = 2;
+		displayString[5] = 0;
+		} else {
+		displayString[4] = 1;
+		displayString[5] = 9;
+	}
+	displayString[6] = (currentDate[1] & 0b11110000)>>4;
+	displayString[7] = (currentDate[1] & 0b00001111);
 }
 
 void getTime(bool ignoreMarker) {
@@ -136,22 +180,11 @@ void getDate(bool ignoreMarker) {
 		marker++;
 		if (marker == 3) marker = 0;
 	}
-	displayString[0] = (currentDate[3] & 0b00110000)>>4;
-	displayString[1] = (currentDate[3] & 0b00001111) + 10;
-	displayString[2] = (currentDate[2] & 0b00010000)>>4;
-	displayString[3] = (currentDate[2] & 0b00001111) + 10;
-	if (currentDate[0] == 1) {
-		displayString[4] = 2;
-		displayString[5] = 0;
-	} else {
-		displayString[4] = 1;
-		displayString[5] = 9;
-	}
-	displayString[6] = (currentDate[1] & 0b11110000)>>4;
-	displayString[7] = (currentDate[1] & 0b00001111);
+	storeDateInDisplayString();
 }
 
 void getEditDataDisplay() {
+	bool newArray[8] = {false, false, false, false, false, false, false, false};
 	if (editIndex == 0 || editIndex == 1) {
 		displayString[7] = 0;
 		displayString[6] = 0;
@@ -159,20 +192,72 @@ void getEditDataDisplay() {
 		displayString[3] = (currentTime[1] &0b01110000)>>4;
 		displayString[1] = (currentTime[0] &0b00001111);
 		displayString[0] = (currentTime[0] &0b01110000)>>4;
-		displayString[5] = 20;
-		displayString[2] = 20;
+		displayString[5] = 62;
+		displayString[2] = 62;
 		if (!blinker) {
 			switch (editIndex) {
 				case 0:
-					displayString[1] = 20;
-					displayString[0] = 20;
+					newArray[1] = true;
+					newArray[0] = true;
 					break;
 				case 1:
-					displayString[3] = 20;
-					displayString[4] = 20;
+					newArray[3] = true;
+					newArray[4] = true;
 					break;
 			}
 		}
+	}
+	if (editIndex == 2 || editIndex == 3 || editIndex == 4) {
+		storeDateInDisplayString();
+		if (!blinker) {
+			switch (editIndex) {
+				case 2:
+				newArray[4] = true;
+				newArray[5] = true;
+				newArray[6] = true;
+				newArray[7] = true;
+				break;
+				case 3:
+				newArray[2] = true;
+				newArray[3] = true;
+				break;
+				case 4:
+				newArray[1] = true;
+				newArray[0] = true;
+				break;
+			}
+		}
+	}
+	setTempDimmer(newArray);
+}
+
+void incrementCurrentIndex() {
+	switch (editIndex) {
+		case 0:
+		currentTime[0] = incrementBcd(currentTime[0]);
+		if (bcdToDec(currentTime[0]) == 24) currentTime[0] = 0;
+		break;
+		case 1:
+		currentTime[1] = incrementBcd(currentTime[1]);
+		if (bcdToDec(currentTime[1]) == 60) currentTime[1] = 0;
+		break;
+		case 2:
+		currentDate[1] = incrementBcd(currentDate[1]);
+		if (bcdToDec(currentDate[1]) == 100) {
+			if (currentDate[0] == 0) currentDate[0] = 1;
+			else currentDate[0] = 0;
+			currentDate[1] = 0;
+		}
+		break;
+		case 3:
+		currentDate[2] = incrementBcd(currentDate[2]);
+		if (bcdToDec(currentDate[2]) == 13) currentDate[2] = 1;
+		break;
+		case 4:
+		currentDate[3] = incrementBcd(currentDate[3]);
+		if (bcdToDec(currentDate[3]) > 28 && bcdToDec(currentDate[2]) == 2 && !isLeapYear()) currentDate[3] = 1;
+		if (bcdToDec(currentDate[3]) > monthDaysCount[bcdToDec(currentDate[2]) - 1]) currentDate[3] = 1;
+		break;
 	}
 }
 
@@ -202,6 +287,31 @@ void toggleMode() {
 	mode++;
 	if (mode > 1) {
 		mode = 0;
+	}
+}
+
+void sendDataToRTC() {
+// 	if (SendHours(currentTime[0]) != 0) displayError((unsigned char)2);
+// 	if (SendMinutes(currentTime[1]) != 0) displayError((unsigned char)2);
+// 	if (SendSeconds(0) != 0) displayError((unsigned char)2);
+// 	if (SendMonthDay(currentDate[3]) != 0) displayError((unsigned char)2);
+// 	if (SendMonth((currentDate[0] << 7) + currentDate[2]) != 0) displayError((unsigned char)2);
+// 	if (SendYear(currentDate[1]) != 0) displayError((unsigned char)2);
+	SendHours(currentTime[0]);
+	SendMinutes(currentTime[1]);
+	SendSeconds(0);
+	SendMonthDay(currentDate[3]);
+	SendMonth((currentDate[0] << 7) + currentDate[2]);
+	SendYear(currentDate[1]);
+}
+
+void increaseEditIndex() {
+	editIndex++;
+	if (editIndex == 5) {
+		editMode = false;
+		editIndex = 0;
+		sendDataToRTC();
+		clearTempDimmer();
 	}
 }
 
@@ -254,9 +364,11 @@ void stoper() {
 
 int main(void)
 {
-    // sprawdzic blinker i jasnosc ledow po ustawieniu DDRC
-	// edit mode
-	// alarm button led
+    // sprawdzic ustawianie roku
+	// wyswietlanie temperatury
+	// dodac wstepne ustawianie daty gdy 01.01.2000
+	// obsluga przyciemniania
+	// obsluga alarmu
 	my_delay_ms(500);
 	Initialise_TWI_Master();
 	getTime(true);
@@ -264,8 +376,12 @@ int main(void)
 	
 // 	ADMUX |=(1<<REFS0);
 // 	ADCSRA |=(1<<ADEN)|(1<<ADPS0);
-	DDRD &= (1 << PIND4);
-	PORTD |= ( 1 << PIND4);
+	DDRD &= (1 << ALM_BUTTON);
+	DDRD &= (1 << SET_BUTTON);
+	DDRD &= (1 << PLUS_BUTTON);
+	PORTD |= ( 1 << ALM_BUTTON);
+	PORTD |= ( 1 << SET_BUTTON);
+	PORTD |= ( 1 << PLUS_BUTTON);
 	
 	DDRD |= (1 << PD6);
 	DDRC |= (1 << PC3);
@@ -279,34 +395,42 @@ int main(void)
 		dimmer(brightness);
 		if (!(PIND & (1 << SET_BUTTON)) || !(PIND & (1 << PLUS_BUTTON)) || !(PIND & (1 << ALM_BUTTON))) {
 			if (!(PIND & (1 << SET_BUTTON))) {
+				if (!blockSetButtonCounter) setButtonCounter++;
 				if (setButtonCounter > 125 && !editMode) {
 					editMode = true;
 					setButtonCounter = 0;
+					blockSetButtonCounter = true;
 				}
-			} else {
-				setButtonCounter++;
 			}
-			if (!(PIND & (1 << PLUS_BUTTON))) plusButtonCounter++;
+			if (!(PIND & (1 << PLUS_BUTTON))) {
+				plusButtonCounter++;
+				if (plusButtonCounter > 10 && editMode) {
+					incrementCurrentIndex();
+					
+					plusButtonCounter = 0;
+				}
+			}
 			if (!(PIND & (1 << ALM_BUTTON))) {
+				almButtonCounter++;
 				if (almButtonCounter > 125) {
 					// alm edit mode
 					almButtonCounter = 0;
 				}	
-			} else {
-				almButtonCounter++;
 			}
 		} else {
 			if (setButtonCounter > 10) {
-				toggleMode();
-				setButtonCounter = 0;
+				if (!editMode) toggleMode();
+				else increaseEditIndex();
 			}
-			plusButtonCounter = 0;
 			if (almButtonCounter > 10) {
 				alarmActive = !alarmActive;
 				// save to eeprom
-				almButtonLedDisplay();
-				almButtonCounter = 0;	
+				almButtonLedDisplay();	
 			}
+			setButtonCounter = 0;
+			plusButtonCounter = 0;
+			almButtonCounter = 0;
+			blockSetButtonCounter = false;
 		}
 		if (mainCounter%3 == 0){
 			getDataToDisplay();

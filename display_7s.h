@@ -23,3 +23,5 @@ void my_delay_us(int microseconds);
 void dimmer(unsigned int brightness);
 void displayInit();
 void displaySegment(unsigned char displayNumber, unsigned char segmentCode, unsigned char brightness);
+void setTempDimmer(const bool newValues[8]);
+void clearTempDimmer();
