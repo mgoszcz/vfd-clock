@@ -17,6 +17,9 @@
 #define TEMP_REGISTER_UPPER_ADDR 0x11
 #define TEMP_REGISTER_LOWER_ADDR 0x12
 #define TWI_targetSlaveAddress 0x68
+#define ALARM_1_SECONDS 0x07
+#define ALARM_1_MINUTES 0x08
+#define ALARM_1_HOURS 0x09
 
 void Initialise_TWI_Master(void);
 unsigned char GetSeconds(void);
@@ -28,6 +31,9 @@ unsigned char GetMonth(void);
 unsigned char GetYear(void);
 unsigned char GetTempUpper(void);
 unsigned char GetTempLower(void);
+unsigned char getAlarm1Seconds(void);
+unsigned char getAlarm1Minutes(void);
+unsigned char getAlarm1Hours(void);
 char SendHours(char value);
 char SendMinutes(char value);
 char SendSeconds(char value);
@@ -35,3 +41,6 @@ char SendWeekDay(char value);
 char SendMonthDay(char value);
 char SendMonth(char value);
 char SendYear(char value);
+char sendAlarm1Seconds(char value);
+char sendAlarm1Minutes(char value);
+char sendAlarm1Hours(char value);

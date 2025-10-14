@@ -81,6 +81,16 @@ unsigned char GetTempLower(void) {
 	return RTCRead(TEMP_REGISTER_LOWER_ADDR);
 }
 
+unsigned char getAlarm1Seconds(void) {
+	return RTCRead(ALARM_1_SECONDS);
+}
+unsigned char getAlarm1Minutes(void) {
+	return RTCRead(ALARM_1_MINUTES);
+}
+unsigned char getAlarm1Hours(void) {
+	return RTCRead(ALARM_1_HOURS);
+}
+
 char SendHours(char value) {
 	return RTCWrite(HOURS_REGISTER_ADDR, value);
 }
@@ -107,4 +117,14 @@ char SendMonth(char value) {
 
 char SendYear(char value) {
 	return RTCWrite(YEARS_REGISTER_ADDR, value);
+}
+
+char sendAlarm1Seconds(char value) {
+	return RTCWrite(ALARM_1_SECONDS, value);
+}
+char sendAlarm1Minutes(char value) {
+	return RTCWrite(ALARM_1_MINUTES, value);
+}
+char sendAlarm1Hours(char value) {
+	return RTCWrite(ALARM_1_HOURS, value);
 }

@@ -18,7 +18,8 @@
 #include "RTC.h"
 
 unsigned char displayString[8] = {0, 0, 0, 0, 0, 0, 0, 0};
-unsigned char currentTime[3] = {0, 0, 0};
+unsigned char currentTime[2] = {0, 0};
+unsigned char alarmTime[3] = {0, 0, 0};
 unsigned char currentDate[4] = {0, 0, 0, 0};
 unsigned char mainCounter = 0;
 unsigned char brightness = 100;
@@ -30,6 +31,8 @@ bool blinker = true;
 bool alarmActive = false;
 bool editMode = false;
 bool blockSetButtonCounter = false;
+bool blockAlmButtonCounter = false;
+bool almEditMode = false;
 char marker = 0;
 char editIndex = 0;
 
@@ -231,6 +234,31 @@ void getEditDataDisplay() {
 	setTempDimmer(newArray);
 }
 
+void getAlmEditDataDisplay() {
+	bool newArray[8] = {false, false, false, false, false, false, false, false};
+	displayString[7] = 20;
+	displayString[6] = 20;
+	displayString[4] = (alarmTime[1] &0xF);
+	displayString[3] = (alarmTime[1] &0x70)>>4;
+	displayString[1] = (alarmTime[0] &0xF);
+	displayString[0] = (alarmTime[0] &0x70)>>4;
+	displayString[5] = 20;
+	displayString[2] = 62;
+	if (!blinker) {
+		switch (editIndex) {
+			case 0:
+			newArray[1] = true;
+			newArray[0] = true;
+			break;
+			case 1:
+			newArray[3] = true;
+			newArray[4] = true;
+			break;
+		}
+	}
+	setTempDimmer(newArray);
+}
+
 void incrementCurrentIndex() {
 	switch (editIndex) {
 		case 0:
@@ -261,6 +289,19 @@ void incrementCurrentIndex() {
 	}
 }
 
+void incrementAlmCurrentIndex() {
+	switch (editIndex) {
+		case 0:
+		alarmTime[0] = incrementBcd(alarmTime[0]);
+		if (bcdToDec(alarmTime[0]) == 24) alarmTime[0] = 0;
+		break;
+		case 1:
+		alarmTime[1] = incrementBcd(alarmTime[1]);
+		if (bcdToDec(alarmTime[1]) == 60) alarmTime[1] = 0;
+		break;
+	}
+}
+
 void getBlinker() {
 	unsigned char seconds = GetSeconds();
 	unsigned char units = seconds & 0x0F;
@@ -271,6 +312,10 @@ void getDataToDisplay() {
 	getBlinker();
 	if (editMode) {
 		getEditDataDisplay();
+		return;
+	}
+	if (almEditMode) {
+		getAlmEditDataDisplay();
 		return;
 	}
 	switch (mode) {
@@ -307,11 +352,19 @@ void sendDataToRTC() {
 
 void increaseEditIndex() {
 	editIndex++;
-	if (editIndex == 5) {
+	if (editIndex == 5 && editMode) {
 		editMode = false;
 		editIndex = 0;
 		sendDataToRTC();
 		clearTempDimmer();
+	}
+	else if (editIndex == 2 && almEditMode) {
+		almEditMode = false;
+		editIndex = 0;
+		sendAlarm1Minutes(alarmTime[1]);
+		sendAlarm1Hours(alarmTime[0]);
+		clearTempDimmer();
+		alarmActive = true;
 	}
 }
 
@@ -364,11 +417,16 @@ void stoper() {
 
 int main(void)
 {
-    // sprawdzic ustawianie roku
+    // obsluga alarmu
+	//   gotowe: alm edit mode, ustawianie czasu i wysylanie TYLKO CZASU do RTC
+	//   dodac: ustawianie rejestrow alarmu (hour + minutes + seconds to trigger)
+	//   dodac wysylanie sekund (0)
+	//   dodac obsluge przerwan w atmedze
+	//   dodac alarm triggered i cale zachowanie zegara przy alarm triggered (mruganie i glosnik)
+	// sprawdzic ustawianie roku - pierwsze ustawienie np 2014 powoduje zapis i wyswietlanie 1914
 	// wyswietlanie temperatury
 	// dodac wstepne ustawianie daty gdy 01.01.2000
 	// obsluga przyciemniania
-	// obsluga alarmu
 	my_delay_ms(500);
 	Initialise_TWI_Master();
 	getTime(true);
@@ -396,10 +454,11 @@ int main(void)
 		if (!(PIND & (1 << SET_BUTTON)) || !(PIND & (1 << PLUS_BUTTON)) || !(PIND & (1 << ALM_BUTTON))) {
 			if (!(PIND & (1 << SET_BUTTON))) {
 				if (!blockSetButtonCounter) setButtonCounter++;
-				if (setButtonCounter > 125 && !editMode) {
+				if (setButtonCounter > 125 && !editMode && !almEditMode) {
 					editMode = true;
 					setButtonCounter = 0;
 					blockSetButtonCounter = true;
+					editIndex = 0;
 				}
 			}
 			if (!(PIND & (1 << PLUS_BUTTON))) {
@@ -409,12 +468,21 @@ int main(void)
 					
 					plusButtonCounter = 0;
 				}
+				if (plusButtonCounter > 10 && almEditMode) {
+					incrementAlmCurrentIndex();
+					
+					plusButtonCounter = 0;
+				}
 			}
 			if (!(PIND & (1 << ALM_BUTTON))) {
-				almButtonCounter++;
-				if (almButtonCounter > 125) {
-					// alm edit mode
+				if (!blockAlmButtonCounter) almButtonCounter++;
+				if (almButtonCounter > 125 && !editMode && !almEditMode) {
+					almEditMode = true;
 					almButtonCounter = 0;
+					blockAlmButtonCounter = true;
+					alarmTime[1] = getAlarm1Minutes() & 0x7F;
+					alarmTime[0] = getAlarm1Hours() & 0x3F;
+					editIndex = 0;
 				}	
 			}
 		} else {
@@ -423,7 +491,8 @@ int main(void)
 				else increaseEditIndex();
 			}
 			if (almButtonCounter > 10) {
-				alarmActive = !alarmActive;
+				if (!almEditMode) alarmActive = !alarmActive;
+				else increaseEditIndex();
 				// save to eeprom
 				almButtonLedDisplay();	
 			}
@@ -431,6 +500,7 @@ int main(void)
 			plusButtonCounter = 0;
 			almButtonCounter = 0;
 			blockSetButtonCounter = false;
+			blockAlmButtonCounter = false;
 		}
 		if (mainCounter%3 == 0){
 			getDataToDisplay();
