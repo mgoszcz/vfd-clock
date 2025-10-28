@@ -20,6 +20,8 @@
 #define ALARM_1_SECONDS 0x07
 #define ALARM_1_MINUTES 0x08
 #define ALARM_1_HOURS 0x09
+#define ALARM_1_DATE 0x0A
+#define STATUS_REGISTER_ADDR 0x0F
 
 void Initialise_TWI_Master(void);
 unsigned char GetSeconds(void);
@@ -34,6 +36,8 @@ unsigned char GetTempLower(void);
 unsigned char getAlarm1Seconds(void);
 unsigned char getAlarm1Minutes(void);
 unsigned char getAlarm1Hours(void);
+unsigned char getAlarm1Date(void);
+unsigned char getStatusData(void);
 char SendHours(char value);
 char SendMinutes(char value);
 char SendSeconds(char value);
@@ -44,3 +48,6 @@ char SendYear(char value);
 char sendAlarm1Seconds(char value);
 char sendAlarm1Minutes(char value);
 char sendAlarm1Hours(char value);
+char sendAlarm1Date(char value);
+char sendControlData(char value);
+char sendStatusData(char value);

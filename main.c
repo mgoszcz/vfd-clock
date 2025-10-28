@@ -14,11 +14,12 @@
 #include <xc.h>
 #include <util/delay.h>
 #include <stdbool.h>
+#include <avr/interrupt.h>
 #include "display_7s.h"
 #include "RTC.h"
 
 unsigned char displayString[8] = {0, 0, 0, 0, 0, 0, 0, 0};
-unsigned char currentTime[2] = {0, 0};
+unsigned char currentTime[3] = {0, 0, 0};
 unsigned char alarmTime[3] = {0, 0, 0};
 unsigned char currentDate[4] = {0, 0, 0, 0};
 unsigned char mainCounter = 0;
@@ -33,8 +34,11 @@ bool editMode = false;
 bool blockSetButtonCounter = false;
 bool blockAlmButtonCounter = false;
 bool almEditMode = false;
+bool almPreview = false;
+bool alarmTriggered = false;
 char marker = 0;
 char editIndex = 0;
+char previewCounter = 3;
 
 const int monthDaysCount[12] = {
 	31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
@@ -83,8 +87,8 @@ void displayLed() {
 	PORTC &= ~(1 << PC3);
 }
 
-void almButtonLedDisplay() {
-	if (alarmActive) {
+void almButtonLedDisplay(bool isOn) {
+	if (isOn) {
 		PORTD |= (1 << PD6);
 	} else {
 		PORTD &= ~(1 << PD6);
@@ -234,6 +238,11 @@ void getEditDataDisplay() {
 	setTempDimmer(newArray);
 }
 
+void getAlarmTime() {
+	alarmTime[1] = getAlarm1Minutes() & 0x7F;
+	alarmTime[0] = getAlarm1Hours() & 0x3F;
+}
+
 void getAlmEditDataDisplay() {
 	bool newArray[8] = {false, false, false, false, false, false, false, false};
 	displayString[7] = 20;
@@ -305,7 +314,12 @@ void incrementAlmCurrentIndex() {
 void getBlinker() {
 	unsigned char seconds = GetSeconds();
 	unsigned char units = seconds & 0x0F;
-	blinker = (units % 2 == 0);
+	bool blinkerState = (units % 2 == 0);
+	if (blinker != blinkerState) {
+		blinker = blinkerState;	
+		if (previewCounter < 3 && almPreview) previewCounter++;
+		if (previewCounter >= 3 && almPreview) almPreview = false;
+	}
 }
 
 void getDataToDisplay() {
@@ -316,6 +330,17 @@ void getDataToDisplay() {
 	}
 	if (almEditMode) {
 		getAlmEditDataDisplay();
+		return;
+	}
+	if (previewCounter < 3 && almPreview) {
+		displayString[7] = 20;
+		displayString[6] = 20;
+		displayString[4] = (alarmTime[1] &0xF);
+		displayString[3] = (alarmTime[1] &0x70)>>4;
+		displayString[1] = (alarmTime[0] &0xF);
+		displayString[0] = (alarmTime[0] &0x70)>>4;
+		displayString[5] = 20;
+		displayString[2] = 62;
 		return;
 	}
 	switch (mode) {
@@ -363,9 +388,35 @@ void increaseEditIndex() {
 		editIndex = 0;
 		sendAlarm1Minutes(alarmTime[1]);
 		sendAlarm1Hours(alarmTime[0]);
+		sendAlarm1Seconds(0);
 		clearTempDimmer();
 		alarmActive = true;
 	}
+}
+
+void presetAlm() {
+	sendAlarm1Minutes(1);
+	sendAlarm1Hours(0);
+	sendAlarm1Seconds(0);
+	sendAlarm1Date(0x80);
+	sendControlData(0b101);
+}
+
+void toggleAlarm() {
+	if (!alarmActive) {
+		alarmActive = true;
+		previewCounter = 0;
+		almPreview = true;
+	} else {
+		alarmActive = false;
+	}
+	almButtonLedDisplay(alarmActive);
+}
+
+ISR(INT0_vect)
+{
+	alarmTriggered = true;
+	_delay_ms(50);
 }
 
 void stoper() {
@@ -419,18 +470,32 @@ int main(void)
 {
     // obsluga alarmu
 	//   gotowe: alm edit mode, ustawianie czasu i wysylanie TYLKO CZASU do RTC
-	//   dodac: ustawianie rejestrow alarmu (hour + minutes + seconds to trigger)
-	//   dodac wysylanie sekund (0)
-	//   dodac obsluge przerwan w atmedze
+	//   gotowe: ustawianie rejestrow alarmu (hour + minutes + seconds to trigger)
+	//   gotowe dodac wysylanie sekund (0)
+	//   gotowe dodac obsluge przerwan w atmedze
 	//   dodac alarm triggered i cale zachowanie zegara przy alarm triggered (mruganie i glosnik)
+	//       nie ma przebiegu na wyjsciu 555 (jest ciagle 5V)
+	//       dodac obsluge alarmActive (rozwazyc ustawianie flaig na rtc zeby wylaczac wylaczac alarm)
+	//       dodac obsluge wylaczania alarmu
+	//       kasowanie flagi na rtc
 	// sprawdzic ustawianie roku - pierwsze ustawienie np 2014 powoduje zapis i wyswietlanie 1914
 	// wyswietlanie temperatury
 	// dodac wstepne ustawianie daty gdy 01.01.2000
 	// obsluga przyciemniania
 	my_delay_ms(500);
 	Initialise_TWI_Master();
+	my_delay_ms(500);
+	presetAlm();
 	getTime(true);
 	getDate(true);
+	getAlarmTime();
+	
+	GICR |= (1 << INT0);
+	MCUCR &= ~(1 << ISC00);
+	MCUCR |=  (1 << ISC01);
+	
+	sei();
+	
 	
 // 	ADMUX |=(1<<REFS0);
 // 	ADCSRA |=(1<<ADEN)|(1<<ADPS0);
@@ -443,13 +508,31 @@ int main(void)
 	
 	DDRD |= (1 << PD6);
 	DDRC |= (1 << PC3);
+	DDRC |= (1 << PC2);
 	PORTC &= ~(1 << PC3);
-	PORTD |= (1 << PD6);
-	
-	
+
 	
 	while(1)
     {
+		if (alarmTriggered) {
+			if (alarmTime[2] != currentTime[2]) {
+				unsigned char statusData = getStatusData();
+				statusData &= 0xFE;
+				sendStatusData(statusData);
+			}
+			if (blinker) {
+				brightness = 100;
+				almButtonLedDisplay(true);
+				PORTC |= (1 << PC2);
+			}
+			else {
+				brightness = 10;
+				almButtonLedDisplay(false);
+				PORTC &= ~(1 << PC2);
+			}
+		} else {
+			
+		}
 		dimmer(brightness);
 		if (!(PIND & (1 << SET_BUTTON)) || !(PIND & (1 << PLUS_BUTTON)) || !(PIND & (1 << ALM_BUTTON))) {
 			if (!(PIND & (1 << SET_BUTTON))) {
@@ -480,8 +563,7 @@ int main(void)
 					almEditMode = true;
 					almButtonCounter = 0;
 					blockAlmButtonCounter = true;
-					alarmTime[1] = getAlarm1Minutes() & 0x7F;
-					alarmTime[0] = getAlarm1Hours() & 0x3F;
+					getAlarmTime();
 					editIndex = 0;
 				}	
 			}
@@ -491,10 +573,9 @@ int main(void)
 				else increaseEditIndex();
 			}
 			if (almButtonCounter > 10) {
-				if (!almEditMode) alarmActive = !alarmActive;
+				if (!almEditMode) toggleAlarm();
 				else increaseEditIndex();
 				// save to eeprom
-				almButtonLedDisplay();	
 			}
 			setButtonCounter = 0;
 			plusButtonCounter = 0;

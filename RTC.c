@@ -91,6 +91,14 @@ unsigned char getAlarm1Hours(void) {
 	return RTCRead(ALARM_1_HOURS);
 }
 
+unsigned char getAlarm1Date(void) {
+	return RTCRead(ALARM_1_DATE);
+}
+
+unsigned char getStatusData(void) {
+	return RTCRead(STATUS_REGISTER_ADDR);
+}
+
 char SendHours(char value) {
 	return RTCWrite(HOURS_REGISTER_ADDR, value);
 }
@@ -127,4 +135,13 @@ char sendAlarm1Minutes(char value) {
 }
 char sendAlarm1Hours(char value) {
 	return RTCWrite(ALARM_1_HOURS, value);
+}
+char sendAlarm1Date(char value) {
+	return RTCWrite(ALARM_1_DATE, value);
+}
+char sendControlData(char value) {
+	return RTCWrite(CONTROL_REGISTER_ADDR, value);
+}
+char sendStatusData(char value) {
+	return RTCWrite(STATUS_REGISTER_ADDR, value);
 }
