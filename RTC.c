@@ -95,6 +95,10 @@ unsigned char getAlarm1Date(void) {
 	return RTCRead(ALARM_1_DATE);
 }
 
+unsigned char getControlData(void) {
+	return RTCRead(CONTROL_REGISTER_ADDR);
+}
+
 unsigned char getStatusData(void) {
 	return RTCRead(STATUS_REGISTER_ADDR);
 }

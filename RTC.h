@@ -37,6 +37,7 @@ unsigned char getAlarm1Seconds(void);
 unsigned char getAlarm1Minutes(void);
 unsigned char getAlarm1Hours(void);
 unsigned char getAlarm1Date(void);
+unsigned char getControlData(void);
 unsigned char getStatusData(void);
 char SendHours(char value);
 char SendMinutes(char value);
