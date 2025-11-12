@@ -423,6 +423,13 @@ void presetAlm() {
 	resetAlarmFlag();
 }
 
+void presetDate() {
+	if (currentDate[1] == 0 && currentDate[2] == 1 && currentDate[3] == 1 && currentTime[0] == 0 && currentTime[1] == 0) {
+		SendYear(0x20);
+		SendMonth(0x81);
+	}
+}
+
 void toggleAlarm() {
 	if (!alarmActive) {
 		setAlarmActive();
@@ -519,9 +526,9 @@ int main(void)
 	//       done dodac obsluge alarmActive (rozwazyc ustawianie flaig na rtc zeby wylaczac wylaczac alarm)
     //       done dodac obsluge wylaczania alarmu
 	//       done kasowanie flagi na rtc
-	// sprawdzic ustawianie roku - pierwsze ustawienie np 2014 powoduje zapis i wyswietlanie 1914
+	// done sprawdzic ustawianie roku - pierwsze ustawienie np 2014 powoduje zapis i wyswietlanie 1914 - chyba cos bylo zjebane w dsc ze pierwszy zapis resetowal century, preset time ponizej to rozwiazal
 	// wyswietlanie temperatury
-	// dodac wstepne ustawianie daty gdy 01.01.2000
+	// done dodac wstepne ustawianie daty gdy 01.01.2000
 	// obsluga przyciemniania
 	my_delay_ms(500);
 	Initialise_TWI_Master();
@@ -532,6 +539,7 @@ int main(void)
 	getTime(true);
 	getDate(true);
 	getAlarmTime();
+	presetDate();
 	
 	GICR |= (1 << INT0);
 	MCUCR &= ~(1 << ISC00);
