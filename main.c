@@ -37,6 +37,8 @@ bool almEditMode = false;
 bool almPreview = false;
 bool alarmTriggered = false;
 bool resetFlagInBlinker = false;
+bool settingsMode = false;
+bool blockPlusButtonCounter = false;
 char marker = 0;
 char editIndex = 0;
 char previewCounter = 3;
@@ -46,12 +48,20 @@ const int monthDaysCount[12] = {
 };
 const int century[2] = {1900, 2000};
 
-char getBrigthness() {
+void getBrigthness() {
 	ADCSRA |=(1<<ADSC);
-	char r = ADC / 10;
-	ADCSRA &= ~(1<<ADSC);
-	if (r > 100) r = 100;
-	return r;
+	while (ADCSRA & (1 << ADSC));
+	uint16_t adc = ADC;
+	uint8_t r = adc * 100UL / 1023;
+	if ((100 - r )< 5) {
+		brightness = 10;
+	} else if ((100 - r) < 15) {
+		brightness = 40;
+	} else if ((100 - r) < 25) {
+		brightness = 80;
+	} else {
+		brightness = 100;
+	}
 }
 
 unsigned char bcdToDec(unsigned char bcd) {
@@ -83,8 +93,9 @@ void my_delay_ms(int miliseconds) {
 }
 
 void displayLed() {
+	if (brightness <= 10) return;
 	PORTC |= (1 << PC3);
-	my_delay_us(brightness);
+	my_delay_us(2 * brightness);
 	PORTC &= ~(1 << PC3);
 }
 
@@ -333,6 +344,31 @@ void getBlinker() {
 	}
 }
 
+void getSettingsDataDisplay() {
+	switch (editIndex) {
+		case 0:
+			displayString[0] = 29;
+			displayString[1] = 25;
+			displayString[2] = 24;
+			displayString[3] = 62;
+			displayString[4] = 20;
+			displayString[5] = 31;
+			displayString[6] = 30;
+			displayString[7] = 20;
+			break;
+		case 1:
+			displayString[0] = 22;
+			displayString[1] = 33;
+			displayString[2] = 34;
+			displayString[3] = 62;
+			displayString[4] = 21;
+			displayString[5] = 35;
+			displayString[6] = 34;
+			displayString[7] = 31;
+			break;
+	}
+}
+
 void getDataToDisplay() {
 	getBlinker();
 	if (editMode) {
@@ -341,6 +377,10 @@ void getDataToDisplay() {
 	}
 	if (almEditMode) {
 		getAlmEditDataDisplay();
+		return;
+	}
+	if (settingsMode) {
+		getSettingsDataDisplay();
 		return;
 	}
 	if (previewCounter < 3 && almPreview) {
@@ -412,6 +452,9 @@ void increaseEditIndex() {
 		clearTempDimmer();
 		setAlarmActive();
 		almButtonLedDisplay(alarmActive);
+	} else if (editIndex == 2 && settingsMode) {
+		settingsMode = false;
+		editIndex = 0;
 	}
 }
 
@@ -522,14 +565,18 @@ int main(void)
 	//   gotowe dodac wysylanie sekund (0)
 	//   gotowe dodac obsluge przerwan w atmedze
 	//   dodac alarm triggered i cale zachowanie zegara przy alarm triggered (mruganie i glosnik)
-	//       nie ma przebiegu na wyjsciu 555 (jest ciagle 5V) - do ogarniecia, obecny brzeczyk dziala przy stalym napieciu 5V
+	//       done nie ma przebiegu na wyjsciu 555 (jest ciagle 5V) - do ogarniecia, obecny brzeczyk dziala przy stalym napieciu 5V
 	//       done dodac obsluge alarmActive (rozwazyc ustawianie flaig na rtc zeby wylaczac wylaczac alarm)
     //       done dodac obsluge wylaczania alarmu
 	//       done kasowanie flagi na rtc
 	// done sprawdzic ustawianie roku - pierwsze ustawienie np 2014 powoduje zapis i wyswietlanie 1914 - chyba cos bylo zjebane w dsc ze pierwszy zapis resetowal century, preset time ponizej to rozwiazal
 	// wyswietlanie temperatury
 	// done dodac wstepne ustawianie daty gdy 01.01.2000
-	// obsluga przyciemniania
+	// done obsluga przyciemniania
+	// menu ustawien ( przytrzymanie przycisku + )
+	//    LEDy - on/off
+	//    jasnosc - 10, 40, 80, 100, auto
+	//    eeprom
 	my_delay_ms(500);
 	Initialise_TWI_Master();
 	my_delay_ms(500);
@@ -548,9 +595,8 @@ int main(void)
 	sei();
 	
 	
-// 	ADMUX |=(1<<REFS0);
-// 	ADCSRA |=(1<<ADEN)|(1<<ADPS0);
-	DDRD &= (1 << ALM_BUTTON);
+ 	ADMUX  = (1 << REFS0);
+ 	ADCSRA = (1 << ADEN) | (1 << ADPS2) | (1 << ADPS0);
 	DDRD &= (1 << SET_BUTTON);
 	DDRD &= (1 << PLUS_BUTTON);
 	PORTD |= ( 1 << ALM_BUTTON);
@@ -560,9 +606,10 @@ int main(void)
 	DDRD |= (1 << PD6);
 	DDRC |= (1 << PC3);
 	DDRC |= (1 << PC2);
+	DDRC  &= ~(1 << PC0);
+	PORTC &= ~(1 << PC0);
 	PORTC &= ~(1 << PC3);
 
-	
 	while(1)
     {
 		if (alarmTriggered) {
@@ -577,7 +624,7 @@ int main(void)
 				PORTC &= ~(1 << PC2);
 			}
 		} else {
-			brightness = 100;
+			
 		}
 		dimmer(brightness);
 		if (!(PIND & (1 << SET_BUTTON)) || !(PIND & (1 << PLUS_BUTTON)) || !(PIND & (1 << ALM_BUTTON))) {
@@ -591,7 +638,13 @@ int main(void)
 				}
 			}
 			if (!(PIND & (1 << PLUS_BUTTON))) {
-				plusButtonCounter++;
+				if (!blockPlusButtonCounter) plusButtonCounter++;
+				if (plusButtonCounter > 125 && !editMode && !almEditMode) {
+					settingsMode = true;
+					plusButtonCounter = 0;
+					blockPlusButtonCounter = true;
+					editIndex = 0;
+				}
 				if (plusButtonCounter > 10 && editMode) {
 					incrementCurrentIndex();
 					
@@ -615,7 +668,7 @@ int main(void)
 			}
 		} else {
 			if (setButtonCounter > 10) {
-				if (!editMode) toggleMode();
+				if (!editMode && !settingsMode) toggleMode();
 				else increaseEditIndex();
 			}
 			if (almButtonCounter > 10) {
@@ -628,9 +681,11 @@ int main(void)
 			almButtonCounter = 0;
 			blockSetButtonCounter = false;
 			blockAlmButtonCounter = false;
+			blockPlusButtonCounter = false;
 		}
 		if (mainCounter%3 == 0){
 			getDataToDisplay();
+			if (!alarmTriggered) getBrigthness();
 		}
 		displayChars(displayString);
 		displayLed();
