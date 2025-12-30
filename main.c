@@ -10,15 +10,20 @@
 #define PLUS_BUTTON PD5
 #define ALM_BUTTON PD3
 
+#define SETTINGS_MAGIC   0xA5
+#define SETTINGS_VERSION 0x01
+
 #include <avr/io.h>
 #include <xc.h>
 #include <util/delay.h>
 #include <stdbool.h>
 #include <avr/interrupt.h>
+#include <avr/eeprom.h>
 #include "display_7s.h"
 #include "RTC.h"
 
 unsigned char displayString[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+unsigned char brightnessBuffer[5] = {100, 100, 100, 100, 100};
 unsigned char currentTime[3] = {0, 0, 0};
 unsigned char alarmTime[3] = {0, 0, 0};
 unsigned char currentDate[4] = {0, 0, 0, 0};
@@ -28,6 +33,9 @@ unsigned char mode = 0;
 unsigned char setButtonCounter = 0;
 unsigned char plusButtonCounter = 0;
 unsigned char almButtonCounter = 0;
+unsigned char settings[2] = {1, 0}; // LCD on, brightness
+unsigned char lcdStateChars[2][3] = {{31, 26, 26}, {20, 31, 30}};
+unsigned char brightnessStateChars[5][4] = {{21, 35, 34, 31}, {20, 20, 20, 1}, {20, 20, 20, 2}, {20, 20, 20, 3}, {20, 20, 20, 4}};
 bool blinker = true;
 bool alarmActive = false;
 bool editMode = false;
@@ -39,29 +47,99 @@ bool alarmTriggered = false;
 bool resetFlagInBlinker = false;
 bool settingsMode = false;
 bool blockPlusButtonCounter = false;
+bool settingsChanged = false;
+bool masterWriteEeprom = true;
 char marker = 0;
 char editIndex = 0;
 char previewCounter = 3;
+
+
+typedef struct {
+	uint8_t magic;
+	uint8_t version;
+	uint8_t settings[2];   // np. {alarm_enabled, backlight_enabled}
+} EepromData;
+
+EepromData EEMEM ee_data;
 
 const int monthDaysCount[12] = {
 	31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
 };
 const int century[2] = {1900, 2000};
+	
+void addToBrightnessBuffer(unsigned char value) {
+	for (int i = 4; i > 0; i--) {
+		brightnessBuffer[i] = brightnessBuffer[i - 1];
+	}
+	brightnessBuffer[0] = value;
+}
+
+bool bufferIsStable(void)
+{
+	for (int i = 1; i < 5; i++) {
+		if (brightnessBuffer[i] != brightnessBuffer[0])
+		return false;
+	}
+	return true;
+}
+
+void writeSettingsToEeprom() {
+	if (!masterWriteEeprom) return;
+	EepromData tmp;
+	tmp.magic = SETTINGS_MAGIC;
+	tmp.version = SETTINGS_VERSION;
+	tmp.settings[0] = settings[0];
+	tmp.settings[1] = settings[1];
+
+	eeprom_update_block(&tmp, &ee_data, sizeof(tmp));
+}
+
+void readSettingsFromEeprom() {
+	 EepromData tmp;
+	 eeprom_read_block(&tmp, &ee_data, sizeof(tmp));
+
+	 if (tmp.magic != SETTINGS_MAGIC || tmp.version != SETTINGS_VERSION) {
+		 settings[0] = 1;
+		 settings[1] = 0;
+	 } else {
+		settings[0] = tmp.settings[0];
+		settings[1] = tmp.settings[1]; 
+	 }
+}
 
 void getBrigthness() {
+	if (settings[1] != 0) {
+		switch (settings[1]) {
+			case 1:
+				brightness = 10;
+				return;
+			case 2:
+				brightness = 40;
+				return;
+			case 3:
+				brightness = 80;
+				return;
+			case 4:
+				brightness = 100;
+				return;
+		}
+	}
 	ADCSRA |=(1<<ADSC);
 	while (ADCSRA & (1 << ADSC));
 	uint16_t adc = ADC;
 	uint8_t r = adc * 100UL / 1023;
 	if ((100 - r )< 5) {
-		brightness = 10;
+		addToBrightnessBuffer(10);
 	} else if ((100 - r) < 15) {
-		brightness = 40;
+		addToBrightnessBuffer(40);
 	} else if ((100 - r) < 25) {
-		brightness = 80;
+		addToBrightnessBuffer(80);
 	} else {
-		brightness = 100;
+		addToBrightnessBuffer(100);
 	}
+	if (!bufferIsStable()) return;
+	if (brightness == brightnessBuffer[0]) return;
+	brightness = brightnessBuffer[0];	
 }
 
 unsigned char bcdToDec(unsigned char bcd) {
@@ -93,9 +171,10 @@ void my_delay_ms(int miliseconds) {
 }
 
 void displayLed() {
+	if (settings[0] == 0) return;
 	if (brightness <= 10) return;
 	PORTC |= (1 << PC3);
-	my_delay_us(2 * brightness);
+	my_delay_us(brightness);
 	PORTC &= ~(1 << PC3);
 }
 
@@ -200,6 +279,35 @@ void getDate(bool ignoreMarker) {
 		if (marker == 3) marker = 0;
 	}
 	storeDateInDisplayString();
+}
+
+void getTemp() {
+	unsigned char temp_upper = GetTempUpper();
+	unsigned char temp_lower = GetTempLower();
+	bool negative = false;
+	if (temp_upper & 0x80) negative = true;
+	temp_upper &= 0x7f;
+	unsigned char fractional_part;
+	if (temp_lower >> 6 > 1) fractional_part = 5;
+	else fractional_part = 0;
+	if (negative) {
+		displayString[1] = 62;
+		} else {
+		displayString[1] = 20;
+	}
+	int secondDigit = temp_upper % 10;
+	int firstDigit = (temp_upper / 10) % 10;
+	if (firstDigit > 0) {
+		displayString[2] = firstDigit;
+		} else {
+		displayString[2] = 20;
+	}
+	displayString[0] = 20;
+	displayString[3] = secondDigit + 10;
+	displayString[4] = fractional_part;
+	displayString[5] = 60;
+	displayString[6] = 23;
+	displayString[7] = 20;
 }
 
 void getEditDataDisplay() {
@@ -323,6 +431,20 @@ void incrementAlmCurrentIndex() {
 	}
 }
 
+void incrementSettingsCurrentIndex() {
+	settingsChanged = true;
+	switch (editIndex) {
+		case 0:
+			settings[0]++;
+			if (settings[0] == 2) settings[0] = 0;
+			break;
+		case 1:
+			settings[1]++;
+			if (settings[1] == 5) settings[1] = 0;
+			break;
+	}
+}
+
 void resetAlarmFlag() {
 	unsigned char statusData = getStatusData();
 	statusData &= 0xFE;
@@ -345,15 +467,16 @@ void getBlinker() {
 }
 
 void getSettingsDataDisplay() {
+	bool newArray[8] = {false, false, false, false, false, false, false, false};
 	switch (editIndex) {
 		case 0:
 			displayString[0] = 29;
 			displayString[1] = 25;
 			displayString[2] = 24;
 			displayString[3] = 62;
-			displayString[4] = 20;
-			displayString[5] = 31;
-			displayString[6] = 30;
+			displayString[4] = lcdStateChars[settings[0]][0];
+			displayString[5] = lcdStateChars[settings[0]][1];
+			displayString[6] = lcdStateChars[settings[0]][2];
 			displayString[7] = 20;
 			break;
 		case 1:
@@ -361,12 +484,19 @@ void getSettingsDataDisplay() {
 			displayString[1] = 33;
 			displayString[2] = 34;
 			displayString[3] = 62;
-			displayString[4] = 21;
-			displayString[5] = 35;
-			displayString[6] = 34;
-			displayString[7] = 31;
+			displayString[4] = brightnessStateChars[settings[1]][0];
+			displayString[5] = brightnessStateChars[settings[1]][1];
+			displayString[6] = brightnessStateChars[settings[1]][2];
+			displayString[7] = brightnessStateChars[settings[1]][3];
 			break;
 	}
+	if (!blinker) {
+		newArray[4] = true;
+		newArray[5] = true;
+		newArray[6] = true;
+		newArray[7] = true;
+	}
+	setTempDimmer(newArray);
 }
 
 void getDataToDisplay() {
@@ -401,12 +531,15 @@ void getDataToDisplay() {
 		case 1:
 			getDate(false);
 			break;
+		case 2:
+			getTemp();
+			break;
 	}
 }
 
 void toggleMode() {
 	mode++;
-	if (mode > 1) {
+	if (mode > 2) {
 		mode = 0;
 	}
 }
@@ -453,8 +586,11 @@ void increaseEditIndex() {
 		setAlarmActive();
 		almButtonLedDisplay(alarmActive);
 	} else if (editIndex == 2 && settingsMode) {
+		if (settingsChanged) writeSettingsToEeprom();
 		settingsMode = false;
 		editIndex = 0;
+		settingsChanged = false;
+		clearTempDimmer();
 	}
 }
 
@@ -559,25 +695,27 @@ void stoper() {
 
 int main(void)
 {
-    // obsluga alarmu
+    // done obsluga alarmu
 	//   gotowe: alm edit mode, ustawianie czasu i wysylanie TYLKO CZASU do RTC
 	//   gotowe: ustawianie rejestrow alarmu (hour + minutes + seconds to trigger)
 	//   gotowe dodac wysylanie sekund (0)
 	//   gotowe dodac obsluge przerwan w atmedze
-	//   dodac alarm triggered i cale zachowanie zegara przy alarm triggered (mruganie i glosnik)
+	//   done dodac alarm triggered i cale zachowanie zegara przy alarm triggered (mruganie i glosnik)
 	//       done nie ma przebiegu na wyjsciu 555 (jest ciagle 5V) - do ogarniecia, obecny brzeczyk dziala przy stalym napieciu 5V
 	//       done dodac obsluge alarmActive (rozwazyc ustawianie flaig na rtc zeby wylaczac wylaczac alarm)
     //       done dodac obsluge wylaczania alarmu
 	//       done kasowanie flagi na rtc
 	// done sprawdzic ustawianie roku - pierwsze ustawienie np 2014 powoduje zapis i wyswietlanie 1914 - chyba cos bylo zjebane w dsc ze pierwszy zapis resetowal century, preset time ponizej to rozwiazal
-	// wyswietlanie temperatury
+	// done wyswietlanie temperatury
 	// done dodac wstepne ustawianie daty gdy 01.01.2000
 	// done obsluga przyciemniania
-	// menu ustawien ( przytrzymanie przycisku + )
-	//    LEDy - on/off
-	//    jasnosc - 10, 40, 80, 100, auto
-	//    eeprom
+	// done menu ustawien ( przytrzymanie przycisku + )
+	//    done LEDy - on/off
+	//    done jasnosc - 10, 40, 80, 100, auto
+	//    done eeprom
+	// done brightness - dodaæ opóŸnienie w zmianie po kilku potwierdzonych pomiarach
 	my_delay_ms(500);
+	readSettingsFromEeprom();
 	Initialise_TWI_Master();
 	my_delay_ms(500);
 	presetAlm();
@@ -652,6 +790,11 @@ int main(void)
 				}
 				if (plusButtonCounter > 10 && almEditMode) {
 					incrementAlmCurrentIndex();
+					
+					plusButtonCounter = 0;
+				}
+				if (plusButtonCounter > 10 && settingsMode) {
+					incrementSettingsCurrentIndex();
 					
 					plusButtonCounter = 0;
 				}
