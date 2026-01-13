@@ -33,12 +33,14 @@ unsigned char mode = 0;
 unsigned char setButtonCounter = 0;
 unsigned char plusButtonCounter = 0;
 unsigned char almButtonCounter = 0;
+unsigned char dbgCounter = 0;
 unsigned char settings[2] = {1, 0}; // LCD on, brightness
 unsigned char lcdStateChars[2][3] = {{31, 26, 26}, {20, 31, 30}};
 unsigned char brightnessStateChars[5][4] = {{21, 35, 34, 31}, {20, 20, 20, 1}, {20, 20, 20, 2}, {20, 20, 20, 3}, {20, 20, 20, 4}};
 bool blinker = true;
 bool alarmActive = false;
 bool editMode = false;
+bool debugMode = false;
 bool blockSetButtonCounter = false;
 bool blockAlmButtonCounter = false;
 bool almEditMode = false;
@@ -49,6 +51,7 @@ bool settingsMode = false;
 bool blockPlusButtonCounter = false;
 bool settingsChanged = false;
 bool masterWriteEeprom = true;
+bool blockDbgCounter = false;
 char marker = 0;
 char editIndex = 0;
 char previewCounter = 3;
@@ -125,14 +128,15 @@ void getBrigthness() {
 		}
 	}
 	ADCSRA |=(1<<ADSC);
+	//10, 40,  76, 88
 	while (ADCSRA & (1 << ADSC));
 	uint16_t adc = ADC;
 	uint8_t r = adc * 100UL / 1023;
-	if ((100 - r )< 5) {
+	if ((100 - r )< 11) {
 		addToBrightnessBuffer(10);
-	} else if ((100 - r) < 15) {
+	} else if ((100 - r) < 40) {
 		addToBrightnessBuffer(40);
-	} else if ((100 - r) < 25) {
+	} else if ((100 - r) < 76) {
 		addToBrightnessBuffer(80);
 	} else {
 		addToBrightnessBuffer(100);
@@ -246,7 +250,12 @@ void getTime(bool ignoreMarker) {
 	displayString[4] = (currentTime[1] &0b00001111);
 	displayString[3] = (currentTime[1] &0b01110000)>>4;
 	displayString[1] = (currentTime[0] &0b00001111);
-	displayString[0] = (currentTime[0] &0b01110000)>>4;
+	char hourDecimal = (currentTime[0] &0b01110000)>>4;
+	if (hourDecimal == 0) {
+		displayString[0] = 20;
+	} else {
+		displayString[0] = hourDecimal;
+	}
 	if (blinker) {
 		displayString[5] = 62;
 		displayString[2] = 62;
@@ -318,7 +327,12 @@ void getEditDataDisplay() {
 		displayString[4] = (currentTime[1] &0b00001111);
 		displayString[3] = (currentTime[1] &0b01110000)>>4;
 		displayString[1] = (currentTime[0] &0b00001111);
-		displayString[0] = (currentTime[0] &0b01110000)>>4;
+		char hourDecimal = (currentTime[0] &0b01110000)>>4;
+		if (hourDecimal == 0) {
+			displayString[0] = 20;
+			} else {
+			displayString[0] = hourDecimal;
+		}
 		displayString[5] = 62;
 		displayString[2] = 62;
 		if (!blinker) {
@@ -499,8 +513,26 @@ void getSettingsDataDisplay() {
 	setTempDimmer(newArray);
 }
 
+void getDebugDataToDisplay() {
+	char brtHundreds = brightness / 100;
+	char brtDec = (brightness % 100) / 10;
+	char brtUnit = (brightness % 100) % 10;
+	displayString[0] = 22;
+	displayString[1] = 33;
+	displayString[2] = 34;
+	displayString[3] = 62;
+	displayString[4] = brtHundreds;
+	displayString[5] = brtDec;
+	displayString[6] = brtUnit;
+	displayString[7] = 20;
+}
+
 void getDataToDisplay() {
 	getBlinker();
+	if (debugMode) {
+		getDebugDataToDisplay();
+		return;
+	}
 	if (editMode) {
 		getEditDataDisplay();
 		return;
@@ -766,7 +798,16 @@ int main(void)
 		}
 		dimmer(brightness);
 		if (!(PIND & (1 << SET_BUTTON)) || !(PIND & (1 << PLUS_BUTTON)) || !(PIND & (1 << ALM_BUTTON))) {
-			if (!(PIND & (1 << SET_BUTTON))) {
+			if (!(PIND & (1 << SET_BUTTON)) && !(PIND & (1 << PLUS_BUTTON))) {
+				if (!blockDbgCounter) dbgCounter++;
+				if (dbgCounter > 200) {
+					blockDbgCounter = true;
+					debugMode = true;
+					dbgCounter = 0;
+					editIndex = 0;
+				}
+			}
+			if (!(PIND & (1 << SET_BUTTON)) && (PIND & (1 << PLUS_BUTTON))) {
 				if (!blockSetButtonCounter) setButtonCounter++;
 				if (setButtonCounter > 125 && !editMode && !almEditMode) {
 					editMode = true;
@@ -775,7 +816,7 @@ int main(void)
 					editIndex = 0;
 				}
 			}
-			if (!(PIND & (1 << PLUS_BUTTON))) {
+			if (!(PIND & (1 << PLUS_BUTTON)) && (PIND & (1 << SET_BUTTON))) {
 				if (!blockPlusButtonCounter) plusButtonCounter++;
 				if (plusButtonCounter > 125 && !editMode && !almEditMode) {
 					settingsMode = true;
@@ -822,9 +863,11 @@ int main(void)
 			setButtonCounter = 0;
 			plusButtonCounter = 0;
 			almButtonCounter = 0;
+			dbgCounter = 0;
 			blockSetButtonCounter = false;
 			blockAlmButtonCounter = false;
 			blockPlusButtonCounter = false;
+			blockDbgCounter = false;
 		}
 		if (mainCounter%3 == 0){
 			getDataToDisplay();
