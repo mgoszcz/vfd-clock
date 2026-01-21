@@ -55,6 +55,8 @@ bool blockDbgCounter = false;
 char marker = 0;
 char editIndex = 0;
 char previewCounter = 3;
+int editModeCounter = 0;
+int alarmTimeout = 0;
 
 
 typedef struct {
@@ -514,17 +516,33 @@ void getSettingsDataDisplay() {
 }
 
 void getDebugDataToDisplay() {
-	char brtHundreds = brightness / 100;
-	char brtDec = (brightness % 100) / 10;
-	char brtUnit = (brightness % 100) % 10;
-	displayString[0] = 22;
-	displayString[1] = 33;
-	displayString[2] = 34;
-	displayString[3] = 62;
-	displayString[4] = brtHundreds;
-	displayString[5] = brtDec;
-	displayString[6] = brtUnit;
-	displayString[7] = 20;
+	char brtHundreds, brtDec, brtUnit;
+	switch (editIndex) {
+		case 0:
+			brtHundreds = brightness / 100;
+			brtDec = (brightness % 100) / 10;
+			brtUnit = (brightness % 100) % 10;
+			displayString[0] = 22;
+			displayString[1] = 33;
+			displayString[2] = 34;
+			displayString[3] = 62;
+			displayString[4] = brtHundreds;
+			displayString[5] = brtDec;
+			displayString[6] = brtUnit;
+			displayString[7] = 20;
+			break;
+		case 1:
+			displayString[0] = 18;
+			displayString[1] = 18;
+			displayString[2] = 18;
+			displayString[3] = 18;
+			displayString[4] = 18;
+			displayString[5] = 18;
+			displayString[6] = 18;
+			displayString[7] = 18;
+			break;
+	}
+	
 }
 
 void getDataToDisplay() {
@@ -577,12 +595,6 @@ void toggleMode() {
 }
 
 void sendDataToRTC() {
-// 	if (SendHours(currentTime[0]) != 0) displayError((unsigned char)2);
-// 	if (SendMinutes(currentTime[1]) != 0) displayError((unsigned char)2);
-// 	if (SendSeconds(0) != 0) displayError((unsigned char)2);
-// 	if (SendMonthDay(currentDate[3]) != 0) displayError((unsigned char)2);
-// 	if (SendMonth((currentDate[0] << 7) + currentDate[2]) != 0) displayError((unsigned char)2);
-// 	if (SendYear(currentDate[1]) != 0) displayError((unsigned char)2);
 	SendHours(currentTime[0]);
 	SendMinutes(currentTime[1]);
 	SendSeconds(0);
@@ -623,6 +635,9 @@ void increaseEditIndex() {
 		editIndex = 0;
 		settingsChanged = false;
 		clearTempDimmer();
+	} else if (editIndex == 2 && debugMode) {
+		debugMode = false;
+		editIndex = 0;
 	}
 }
 
@@ -672,81 +687,39 @@ void dismissAlarm() {
 	}
 }
 
+void checkForAlarmTimeout() {
+	alarmTimeout++;
+	if (alarmTimeout > 3000) {
+		dismissAlarm();
+		alarmTimeout = 0;
+	}
+};
+
+void editModeTimeout() {
+	if (almEditMode || editMode || settingsMode ) {
+		editModeCounter++;
+	}
+	if (editModeCounter > 1000 || settingsMode) {
+		editMode = false;
+		almEditMode = false;
+		settingsMode = false;
+		settingsChanged = false;
+		editModeCounter = 0;
+		editIndex = 0;
+		clearTempDimmer();
+	}
+}
+
 ISR(INT0_vect)
 {
 	alarmTriggered = true;
+	alarmTimeout = 0;
 	_delay_ms(50);
-}
-
-void stoper() {
-	// 		displayChars(displayString);
-	// 		counter++;
-	// 		if (counter%3 == 0) {
-	// 			if (displayString[7] != 9) {
-	// 				displayString[7]++;
-	// 			} else {
-	// 				displayString[7] = 0;
-	// 				if (displayString[6] != 9) {
-	// 					displayString[6]++;
-	// 				} else {
-	// 					displayString[6] = 0;
-	// 					if (displayString[5] != 9) {
-	// 						displayString[5]++;
-	// 						} else {
-	// 						displayString[5] = 0;
-	// 						if (displayString[4] != 9) {
-	// 							displayString[4]++;
-	// 							} else {
-	// 							displayString[4] = 0;
-	// 							if (displayString[3] != 9) {
-	// 								displayString[3]++;
-	// 								} else {
-	// 								displayString[3] = 0;
-	// 								if (displayString[2] != 9) {
-	// 									displayString[2]++;
-	// 									} else {
-	// 									displayString[2] = 0;
-	// 									if (displayString[1] != 9) {
-	// 										displayString[1]++;
-	// 										} else {
-	// 										displayString[1] = 0;
-	// 										if (displayString[0] != 9) {
-	// 											displayString[0]++;
-	// 											} else {
-	// 											displayString[0] = 0;
-	// 										}
-	// 									}
-	// 								}
-	// 							}
-	// 						}
-	// 					}
-	// 				}
-	// 			}
-	// 		}
 }
 
 int main(void)
 {
-    // done obsluga alarmu
-	//   gotowe: alm edit mode, ustawianie czasu i wysylanie TYLKO CZASU do RTC
-	//   gotowe: ustawianie rejestrow alarmu (hour + minutes + seconds to trigger)
-	//   gotowe dodac wysylanie sekund (0)
-	//   gotowe dodac obsluge przerwan w atmedze
-	//   done dodac alarm triggered i cale zachowanie zegara przy alarm triggered (mruganie i glosnik)
-	//       done nie ma przebiegu na wyjsciu 555 (jest ciagle 5V) - do ogarniecia, obecny brzeczyk dziala przy stalym napieciu 5V
-	//       done dodac obsluge alarmActive (rozwazyc ustawianie flaig na rtc zeby wylaczac wylaczac alarm)
-    //       done dodac obsluge wylaczania alarmu
-	//       done kasowanie flagi na rtc
-	// done sprawdzic ustawianie roku - pierwsze ustawienie np 2014 powoduje zapis i wyswietlanie 1914 - chyba cos bylo zjebane w dsc ze pierwszy zapis resetowal century, preset time ponizej to rozwiazal
-	// done wyswietlanie temperatury
-	// done dodac wstepne ustawianie daty gdy 01.01.2000
-	// done obsluga przyciemniania
-	// done menu ustawien ( przytrzymanie przycisku + )
-	//    done LEDy - on/off
-	//    done jasnosc - 10, 40, 80, 100, auto
-	//    done eeprom
-	// done brightness - dodaæ opóŸnienie w zmianie po kilku potwierdzonych pomiarach
-	my_delay_ms(500);
+    my_delay_ms(500);
 	readSettingsFromEeprom();
 	Initialise_TWI_Master();
 	my_delay_ms(500);
@@ -793,6 +766,7 @@ int main(void)
 				almButtonLedDisplay(false);
 				PORTC &= ~(1 << PC2);
 			}
+			checkForAlarmTimeout();
 		} else {
 			
 		}
@@ -814,6 +788,7 @@ int main(void)
 					setButtonCounter = 0;
 					blockSetButtonCounter = true;
 					editIndex = 0;
+					editModeCounter = 0;
 				}
 			}
 			if (!(PIND & (1 << PLUS_BUTTON)) && (PIND & (1 << SET_BUTTON))) {
@@ -823,6 +798,7 @@ int main(void)
 					plusButtonCounter = 0;
 					blockPlusButtonCounter = true;
 					editIndex = 0;
+					editModeCounter = 0;
 				}
 				if (plusButtonCounter > 10 && editMode) {
 					incrementCurrentIndex();
@@ -848,11 +824,12 @@ int main(void)
 					blockAlmButtonCounter = true;
 					getAlarmTime();
 					editIndex = 0;
+					editModeCounter = 0;
 				}	
 			}
 		} else {
 			if (setButtonCounter > 10) {
-				if (!editMode && !settingsMode) toggleMode();
+				if (!editMode && !settingsMode && !debugMode && !almEditMode) toggleMode();
 				else increaseEditIndex();
 			}
 			if (almButtonCounter > 10) {
@@ -872,6 +849,7 @@ int main(void)
 		if (mainCounter%3 == 0){
 			getDataToDisplay();
 			if (!alarmTriggered) getBrigthness();
+			editModeTimeout();
 		}
 		displayChars(displayString);
 		displayLed();
