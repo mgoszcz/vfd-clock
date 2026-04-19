@@ -35,6 +35,7 @@ unsigned char plusButtonCounter = 0;
 unsigned char almButtonCounter = 0;
 unsigned char dbgCounter = 0;
 unsigned char settings[2] = {1, 0}; // LCD on, brightness
+unsigned char newSettings[2] = {1, 0};
 unsigned char lcdStateChars[2][3] = {{31, 26, 26}, {20, 31, 30}};
 unsigned char brightnessStateChars[5][4] = {{21, 35, 34, 31}, {20, 20, 20, 1}, {20, 20, 20, 2}, {20, 20, 20, 3}, {20, 20, 20, 4}};
 bool blinker = true;
@@ -113,8 +114,11 @@ void readSettingsFromEeprom() {
 }
 
 void getBrigthness() {
-	if (settings[1] != 0) {
-		switch (settings[1]) {
+	char tmpSettings;
+	if (settingsMode) tmpSettings = newSettings[1];
+	else tmpSettings = settings[1];
+	if (tmpSettings != 0) {
+		switch (tmpSettings) {
 			case 1:
 				brightness = 10;
 				return;
@@ -177,7 +181,8 @@ void my_delay_ms(int miliseconds) {
 }
 
 void displayLed() {
-	if (settings[0] == 0) return;
+	if (!settingsMode && settings[0] == 0) return;
+	if (settingsMode && newSettings[0] == 0) return;
 	if (brightness <= 10) return;
 	PORTC |= (1 << PC3);
 	my_delay_us(brightness);
@@ -451,12 +456,12 @@ void incrementSettingsCurrentIndex() {
 	settingsChanged = true;
 	switch (editIndex) {
 		case 0:
-			settings[0]++;
-			if (settings[0] == 2) settings[0] = 0;
+			newSettings[0]++;
+			if (newSettings[0] == 2) newSettings[0] = 0;
 			break;
 		case 1:
-			settings[1]++;
-			if (settings[1] == 5) settings[1] = 0;
+			newSettings[1]++;
+			if (newSettings[1] == 5) newSettings[1] = 0;
 			break;
 	}
 }
@@ -490,9 +495,9 @@ void getSettingsDataDisplay() {
 			displayString[1] = 25;
 			displayString[2] = 24;
 			displayString[3] = 62;
-			displayString[4] = lcdStateChars[settings[0]][0];
-			displayString[5] = lcdStateChars[settings[0]][1];
-			displayString[6] = lcdStateChars[settings[0]][2];
+			displayString[4] = lcdStateChars[newSettings[0]][0];
+			displayString[5] = lcdStateChars[newSettings[0]][1];
+			displayString[6] = lcdStateChars[newSettings[0]][2];
 			displayString[7] = 20;
 			break;
 		case 1:
@@ -500,10 +505,10 @@ void getSettingsDataDisplay() {
 			displayString[1] = 33;
 			displayString[2] = 34;
 			displayString[3] = 62;
-			displayString[4] = brightnessStateChars[settings[1]][0];
-			displayString[5] = brightnessStateChars[settings[1]][1];
-			displayString[6] = brightnessStateChars[settings[1]][2];
-			displayString[7] = brightnessStateChars[settings[1]][3];
+			displayString[4] = brightnessStateChars[newSettings[1]][0];
+			displayString[5] = brightnessStateChars[newSettings[1]][1];
+			displayString[6] = brightnessStateChars[newSettings[1]][2];
+			displayString[7] = brightnessStateChars[newSettings[1]][3];
 			break;
 	}
 	if (!blinker) {
@@ -614,6 +619,7 @@ void setAlarmActive() {
 
 void increaseEditIndex() {
 	editIndex++;
+	editModeCounter = 0;
 	if (editIndex == 5 && editMode) {
 		editMode = false;
 		editIndex = 0;
@@ -630,7 +636,12 @@ void increaseEditIndex() {
 		setAlarmActive();
 		almButtonLedDisplay(alarmActive);
 	} else if (editIndex == 2 && settingsMode) {
-		if (settingsChanged) writeSettingsToEeprom();
+		if (settingsChanged) 
+		{
+			settings[0] = newSettings[0];
+			settings[1] = newSettings[1];	
+			writeSettingsToEeprom();
+		}
 		settingsMode = false;
 		editIndex = 0;
 		settingsChanged = false;
@@ -641,12 +652,20 @@ void increaseEditIndex() {
 	}
 }
 
-void presetAlm() {
-	sendAlarm1Minutes(1);
-	sendAlarm1Hours(0);
-	sendAlarm1Seconds(0);
-	sendAlarm1Date(0x80);
-	resetAlarmFlag();
+void rtcInit() {
+	unsigned char status = getStatusData();
+	bool osf = status & (1 << 7);
+	
+	if (osf) {
+		presetDate();
+		sendAlarm1Minutes(0);
+		sendAlarm1Hours(0);
+		sendAlarm1Seconds(0);
+		sendAlarm1Date(0x80);
+		status &= ~(1 << 0); // A1F = 0
+		status &= ~(1 << 7); // OSF = 0
+		sendStatusData(status);
+	}
 }
 
 void presetDate() {
@@ -699,7 +718,7 @@ void editModeTimeout() {
 	if (almEditMode || editMode || settingsMode ) {
 		editModeCounter++;
 	}
-	if (editModeCounter > 1000 || settingsMode) {
+	if (editModeCounter > 1000) {
 		editMode = false;
 		almEditMode = false;
 		settingsMode = false;
@@ -723,13 +742,12 @@ int main(void)
 	readSettingsFromEeprom();
 	Initialise_TWI_Master();
 	my_delay_ms(500);
-	presetAlm();
+	rtcInit();
 	readAlarmActive();
 	
 	getTime(true);
 	getDate(true);
 	getAlarmTime();
-	presetDate();
 	
 	GICR |= (1 << INT0);
 	MCUCR &= ~(1 << ISC00);
@@ -776,8 +794,12 @@ int main(void)
 				if (!blockDbgCounter) dbgCounter++;
 				if (dbgCounter > 200) {
 					blockDbgCounter = true;
+					blockSetButtonCounter = true;
+					blockPlusButtonCounter = true;
 					debugMode = true;
 					dbgCounter = 0;
+					setButtonCounter = 0;
+					plusButtonCounter = 0;
 					editIndex = 0;
 				}
 			}
@@ -794,6 +816,8 @@ int main(void)
 			if (!(PIND & (1 << PLUS_BUTTON)) && (PIND & (1 << SET_BUTTON))) {
 				if (!blockPlusButtonCounter) plusButtonCounter++;
 				if (plusButtonCounter > 125 && !editMode && !almEditMode) {
+					newSettings[0] = settings[0];
+					newSettings[1] = settings[1];
 					settingsMode = true;
 					plusButtonCounter = 0;
 					blockPlusButtonCounter = true;
@@ -802,16 +826,19 @@ int main(void)
 				}
 				if (plusButtonCounter > 10 && editMode) {
 					incrementCurrentIndex();
+					editModeCounter = 0;
 					
 					plusButtonCounter = 0;
 				}
 				if (plusButtonCounter > 10 && almEditMode) {
 					incrementAlmCurrentIndex();
+					editModeCounter = 0;
 					
 					plusButtonCounter = 0;
 				}
 				if (plusButtonCounter > 10 && settingsMode) {
 					incrementSettingsCurrentIndex();
+					editModeCounter = 0;
 					
 					plusButtonCounter = 0;
 				}
