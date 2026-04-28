@@ -277,7 +277,7 @@ void getDate(bool ignoreMarker) {
 		currentDate[3] = GetMonthDay();
 		currentDate[2] = GetMonth() & 0b11111;
 		currentDate[1] = GetYear();
-		currentDate[0] = GetMonth() & 0b10000000 >> 7;
+		currentDate[0] = (GetMonth() & 0b10000000) >> 7;
 		} else {
 		switch (marker) {
 			case 0:
@@ -288,7 +288,7 @@ void getDate(bool ignoreMarker) {
 			break;
 			case 2:
 			currentDate[1] = GetYear();
-			currentDate[0] = GetMonth() & 0b10000000 >> 7;
+			currentDate[0] = (GetMonth() & 0b10000000) >> 7;
 			break;
 		}
 		marker++;
